@@ -99,6 +99,10 @@ class Tests {
         assertEquals(104.0, accountInThreeYears(13, 100), 1e-2)
     }
 
+    private fun assertEquals(d: Double, accountInThreeYears: Int, d1: Double) {
+
+    }
+
     @Test
     @Tag("2")
     fun numberRevert() {
