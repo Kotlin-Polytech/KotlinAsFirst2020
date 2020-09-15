@@ -18,7 +18,11 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    if (((number / 1000) + ((number % 1000) / 100)) == (((number % 100) / 10) + (number % 10)))
+        return true
+    else return false
+}
 
 /**
  * Простая (2 балла)
@@ -36,7 +40,25 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int = TODO()
+fun daysInMonth(month: Int, year: Int): Int {
+    val m = IntArray(13)
+    m[1] = 31
+    m[2] = 28
+    m[3] = 31
+    m[4] = 30
+    m[5] = 31
+    m[6] = 30
+    m[7] = 31
+    m[8] = 31
+    m[9] = 30
+    m[10] = 31
+    m[11] = 30
+    m[12] = 31
+
+    if ((year % 4 == 0) and (month == 2) and (year != 1700) and (year != 1800) and (year != 1900) and (year != 2100) and (year != 2200) and (year != 2300))
+        return 29
+    else return m[month]
+}
 
 /**
  * Простая (2 балла)
@@ -59,4 +81,7 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+
+    return (a * b <= r * s) xor (a * c <= r * s) xor (b * c <= r * s)
+}
