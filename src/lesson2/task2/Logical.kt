@@ -19,9 +19,9 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
 fun isNumberHappy(number: Int): Boolean {
-    if (((number / 1000) + ((number % 1000) / 100)) == (((number % 100) / 10) + (number % 10)))
-        return true
-    else return false
+    return if (((number / 1000) + ((number % 1000) / 100)) == (((number % 100) / 10) + (number % 10)))
+        true
+    else false
 }
 
 /**
@@ -55,9 +55,9 @@ fun daysInMonth(month: Int, year: Int): Int {
     m[11] = 30
     m[12] = 31
 
-    if ((year % 4 == 0) and (month == 2) and (year != 1700) and (year != 1800) and (year != 1900) and (year != 2100) and (year != 2200) and (year != 2300))
-        return 29
-    else return m[month]
+    return if ((year % 4 == 0) and (month == 2) and (year != 1700) and (year != 1800) and (year != 1900) and (year != 2100) and (year != 2200) and (year != 2300))
+        29
+    else m[month]
 }
 
 /**
@@ -82,6 +82,7 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-
-    return (a * b <= r * s) xor (a * c <= r * s) xor (b * c <= r * s)
+    return if ((a * b <= r * s) xor (a * c <= r * s) xor (b * c <= r * s))
+        true
+    else false
 }
