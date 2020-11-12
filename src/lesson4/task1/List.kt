@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 4: списки
@@ -210,6 +211,7 @@ fun factorizeToString(n: Int): String = TODO()
  */
 fun convert(n: Int, base: Int): List<Int> = TODO()
 
+
 /**
  * Сложная (4 балла)
  *
@@ -221,7 +223,20 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String = buildString {
+    var x = n
+    val result = mutableListOf<Int>()
+    while (x > 0) {
+        result += x % base
+        x /= base
+    }
+    for (i in result.reversed()) {
+        if (i < 10)
+            append(i)
+        else append('a' - 10 + i)
+    }
+}
+
 
 /**
  * Средняя (3 балла)
@@ -230,7 +245,14 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var result = 0.0
+    for (i in digits.size - 1 downTo 0) {
+        result += digits[i] * base.toDouble().pow(digits.size - i - 1)
+    }
+    return result.toInt()
+
+}
 
 /**
  * Сложная (4 балла)
@@ -244,7 +266,16 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    val result = mutableListOf<Int>()
+    for (i in str) {
+        result += if (i < 'a')
+            i - '0'
+        else
+            i - 'a' + 10
+    }
+    return decimal(result, base)
+}
 
 /**
  * Сложная (5 баллов)
@@ -263,4 +294,65 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String = buildString {
+    val digits1 = listOf(
+        "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять"
+    )
+    val digits2 = listOf(
+        "десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать",
+        "семнадцать", "восемнадцать", "девятнадцать"
+    )
+    var quantity = 1
+    while (10.0.pow(quantity) <= n)
+        quantity += 1
+    if (quantity > 3) {
+        val space =
+            if (((quantity > 4)) or ((quantity == 4) && ((n / 1000) % 10 > 2))) " "
+            else ""
+        append(
+            when {
+                (n / 10000) % 10 != 1 ->
+                    when ((n / 1000) % 10) {
+                        1 -> russian((n / 10000) * 10) + space + "одна тысяча"
+                        2 -> russian((n / 10000) * 10) + space + "две тысячи"
+                        in 3..4 -> russian(n / 1000) + space + "тысячи"
+                        else -> russian(n / 1000) + space + "тысяч"
+                    }
+                else -> russian(n / 1000) + space + "тысяч"
+            }
+        )
+        if (n % 1000 != 0) append(" ")
+    }
+    for (i in 3 downTo 1) {
+        val k = (n / 10.0.pow(i - 1) % 10).toInt()
+        when {
+            (i == 3) && (k != 0) -> {
+                val space = if ((n % 100) != 0) " "
+                else ""
+                append(
+                    when (k) {
+                        1 -> "сто$space"
+                        2 -> "двести$space"
+                        in 3..4 -> russian(k) + "ста$space"
+                        else -> russian(k) + "сот$space"
+                    }
+                )
+            }
+            (i == 2) && (k > 1) -> {
+                val space = if ((n % 10) != 0) " "
+                else ""
+                append(
+                    when (k) {
+                        in 2..3 -> russian(k) + "дцать$space"
+                        4 -> "сорок$space"
+                        9 -> "девяносто$space"
+                        else -> russian(k) + "десят$space"
+                    }
+                )
+            }
+            (i == 2) && (k == 1) -> append(digits2[n % 10])
+            (i == 1) && (k != 0) && ((n / 10) % 10 != 1) -> append(digits1[k - 1])
+        }
+    }
+}
+

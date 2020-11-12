@@ -3,9 +3,7 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
-import ru.spbstu.ktuples.Variant2
 import kotlin.math.max
-import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -147,17 +145,14 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     var answer = 0
     if ((b < c) xor ((b > c) and (a > d))) answer = -1
-    else {
-        if ((a < c) and (b < d)) answer = b - c
-        else {
-            if ((a >= c) and (b <= d)) answer = b - a
-            else {
-                if ((a >= c) and (b >= d)) answer = d - a
-                else {
-                    if ((a <= c) and (b >= d)) answer = d - c
-                }
-            }
-        }
+    else if ((a < c) and (b < d)) {
+        answer = b - c
+    } else if ((a >= c) and (b <= d)) {
+        answer = b - a
+    } else if ((a >= c) and (b >= d)) {
+        answer = d - a
+    } else if ((a <= c) and (b >= d)) {
+        answer = d - c
     }
     return answer
 }

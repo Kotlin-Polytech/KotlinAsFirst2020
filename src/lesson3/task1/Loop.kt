@@ -2,7 +2,7 @@
 
 package lesson3.task1
 
-import lesson5.task1.removeFillerWords
+
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -74,19 +74,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int {
-    var count = 0
-    return if (n == 0)
-        1
-    else {
-        while (n != 0) {
-            count += 1
-            n / 10
-        }
-        count
-    }
-
-}
+fun digitNumber(n: Int): Int = TODO()
 
 /**
  * Простая (2 балла)
@@ -106,8 +94,12 @@ fun fib(n: Int): Int = when {
  */
 fun minDivisor(n: Int): Int {
     var a = 2
-    while (n % a != 0)
-        a += 1
+    if (n % 2 == 0) a = 2
+    else {
+        a = 3
+        while (n % a != 0)
+            a += 2
+    }
     return a
 }
 
@@ -199,19 +191,7 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean {
-    var count = n
-    var number = n % 10
-    var check: Boolean = false
-
-    while (n != 0) {
-        count /= 10
-        if (number != count % 10) {
-            check = true
-        }
-    }
-    return check
-}
+fun hasDifferentDigits(n: Int): Boolean = TODO()
 
 /**
  * Средняя (4 балла)
