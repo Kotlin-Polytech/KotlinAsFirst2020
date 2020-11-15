@@ -96,7 +96,15 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *   buildGrades(mapOf("Марат" to 3, "Семён" to 5, "Михаил" to 5))
  *     -> mapOf(5 to listOf("Семён", "Михаил"), 3 to listOf("Марат"))
  */
-fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
+fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
+    val gradesMap = mutableMapOf<Int, MutableList<String>>()
+    for ((_, grade) in grades) gradesMap[grade] = mutableListOf()
+    for ((name, grade) in grades) {
+
+        gradesMap[grade]?.plusAssign(name)
+    }
+    return gradesMap
+}
 
 /**
  * Простая (2 балла)
@@ -108,7 +116,14 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    for ((i, ) in a) {
+        if (a[i] != b[i]) {
+            return false
+        }
+    }
+    return true
+}
 
 /**
  * Простая (2 балла)
@@ -277,7 +292,22 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var res1: Int = -1
+    var res2: Int = -1
+    val check = mutableMapOf<Int, Int>()
+    for ((i, j) in list.withIndex()) {
+        val a = check[number - j]
+        if (a != null) {
+            res1 = a
+            res2 = i
+        }
+        check[j] = i
+    }
+    return if (res1 != -1) {
+        res1 to res2
+    } else -1 to -1
+}
 
 /**
  * Очень сложная (8 баллов)
