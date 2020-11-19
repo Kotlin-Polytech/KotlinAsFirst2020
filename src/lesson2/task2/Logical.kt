@@ -37,15 +37,13 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-
-    val m = listOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
     return if ((month == 2) && (year % 4 == 0))
         if ((year in 1700..2300) and (year % 100 == 0))
             m[month - 1]
         else 29
     else m[month - 1]
 }
-
+val m = listOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 /**
  * Простая (2 балла)
  *
@@ -72,34 +70,26 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var x2 = 0
     var t1 = 0
     var t2 = 0
-    if (a <= c && a <= b) {
-        x1 = a
-        x2 = if (b <= c) {
-            b
-        } else
-            c
-    } else {
-        if (b <= c && b <= a) {
-            x1 = b
-            x2 = if (a <= c) {
-                a
-            } else
-                c
-        } else {
-            x1 = c
-            x2 = if (a <= b) {
-                a
-            } else
-                b
-
-        }
+    when {
+        (a <= b && a <= c) -> x1 = a
+        (b <= a && b <= c) -> x1 = b
+        (c <= a && c <= b) -> x1 = c
     }
-    if (r > s) {
-        t1 = r
-        t2 = s
-    } else {
-        t2 = r
-        t1 = s
+    when {
+        ((x1 >= a && a <= b) xor (x1 >= a && a <= c)) -> x2 = a
+        ((x1 >= b && b <= a) xor (x1 >= b && b <= c)) -> x2 = b
+        ((x1 >= c && c <= b) xor (x1 >= c && c <= a)) -> x2 = c
+    }
+
+    when {
+        (r <= s) -> {
+            t1 = r
+            t2 = s
+        }
+        (s <= r) -> {
+            t1 = s
+            t2 = r
+        }
     }
     return (x1 <= t1 && x2 <= t2) or (x1 <= t2 && x2 <= t1)
 }
