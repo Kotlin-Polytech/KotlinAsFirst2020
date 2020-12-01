@@ -36,14 +36,12 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int {
-    return if ((month == 2) && (year % 4 == 0))
-        if ((year in 1700..2300) and (year % 100 == 0))
-            m[month - 1]
-        else 29
-    else m[month - 1]
-}
-val m = listOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+fun daysInMonth(month: Int, year: Int): Int =
+    when (month) {
+        2 -> if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) 29 else 28
+        1, 3, 5, 7, 8, 10, 12 -> 31
+        else -> 30
+    }
 /**
  * Простая (2 балла)
  *
@@ -68,28 +66,36 @@ fun circleInside(
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var x1 = 0
     var x2 = 0
+    var x3 = 0
     var t1 = 0
     var t2 = 0
-    when {
-        (a <= b && a <= c) -> x1 = a
-        (b <= a && b <= c) -> x1 = b
-        (c <= a && c <= b) -> x1 = c
-    }
-    when {
-        ((x1 >= a && a <= b) xor (x1 >= a && a <= c)) -> x2 = a
-        ((x1 >= b && b <= a) xor (x1 >= b && b <= c)) -> x2 = b
-        ((x1 >= c && c <= b) xor (x1 >= c && c <= a)) -> x2 = c
-    }
-
-    when {
-        (r <= s) -> {
-            t1 = r
-            t2 = s
+    if (b > a) {
+        if (c > a) {
+            x1 = b
+            x2 = c
+            x3 = a
+        } else {
+            x1 = b
+            x2 = a
+            x3 = c
         }
-        (s <= r) -> {
-            t1 = s
-            t2 = r
+    } else {
+        if (b > c) {
+            x1 = a
+            x2 = b
+            x3 = c
+        } else {
+            x1 = a
+            x2 = c
+            x3 = b
         }
     }
-    return (x1 <= t1 && x2 <= t2) or (x1 <= t2 && x2 <= t1)
+    if (r > s) {
+        t1 = r
+        t2 = s
+    } else {
+        t2 = r
+        t1 = s
+    }
+    return (x1 <= t1 && (x2 <= t2 || x3 <= t2)) || (x2 <= t1 && x3 <= t2)
 }
