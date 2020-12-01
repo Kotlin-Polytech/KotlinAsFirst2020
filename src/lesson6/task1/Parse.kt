@@ -78,34 +78,43 @@ fun main() {
  */
 
 val Date = mapOf<String, Int>(
-    "январь" to 31,
-    "февраль" to 28,
-    "март" to 31,
-    "апрель" to 30,
-    "май" to 31,
-    "июнь" to 30,
-    "июль" to 31,
-    "август" to 31,
-    "сентябрь" to 30,
-    "октябрь" to 31,
-    "ноябрь" to 30,
-    "декабрь" to 31
+    "января" to 31,
+    "февраля" to 28,
+    "марта" to 31,
+    "апреля" to 30,
+    "майя" to 31,
+    "июня" to 30,
+    "июля" to 31,
+    "августа" to 31,
+    "сентября" to 30,
+    "октября" to 31,
+    "ноября" to 30,
+    "декабря" to 31
 )
 
 fun dateStrToDigit(str: String): String {
     var parts = str.split(" ")
+    if (parts.size != 3) return ""
     var check = -1
+    var numberMonth = 1.toInt()
+    var day = parts[0].toInt()
+    var dayAnswer = "".toString()
+    var month = parts[1].toString()
+    val year = parts[2].toInt()
     for ((m, d) in Date) {
-        if (parts[1] == m && parts[0].toInt() <= d) {
+        if (month == m && day <= d) {
             check = 1
+            month = if (numberMonth < 10) ("0$numberMonth")
+            else numberMonth.toString()
         }
+        numberMonth++
     }
+    dayAnswer = if (day < 10) "0$day"
+    else "$day"
     return if (check == 1) {
-        "$parts[0].$parts[1].$parts[2]"
+        "$dayAnswer.$month.$year"
     } else ""
 }
-
-
 
 
 /**
@@ -181,7 +190,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var k = 0
+    val words = str.toLowerCase().split(" ")
+    for (i in 0 until words.size - 1) {
+        if (words[i] == words[i + 1]) return k
+        k += words[i].length + 1
+    }
+    k = -1
+    return k
+}
 
 /**
  * Сложная (6 баллов)
@@ -194,7 +212,19 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var parts = description.replace(";", "").split(" ")
+    var cost = 0.0
+    var answer = ""
+    for (i in 1 until parts.size step 2) {
+        if (parts[i].toDouble() > cost) {
+            cost = parts[i].toDouble()
+            answer = parts[i - 1]
+        }
+    }
+    return answer
+
+}
 
 /**
  * Сложная (6 баллов)
