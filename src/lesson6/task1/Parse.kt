@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import java.lang.StringBuilder
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,37 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+
+val Date = mapOf<String, Int>(
+    "январь" to 31,
+    "февраль" to 28,
+    "март" to 31,
+    "апрель" to 30,
+    "май" to 31,
+    "июнь" to 30,
+    "июль" to 31,
+    "август" to 31,
+    "сентябрь" to 30,
+    "октябрь" to 31,
+    "ноябрь" to 30,
+    "декабрь" to 31
+)
+
+fun dateStrToDigit(str: String): String {
+    var parts = str.split(" ")
+    var check = -1
+    for ((m, d) in Date) {
+        if (parts[1] == m && parts[0].toInt() <= d) {
+            check = 1
+        }
+    }
+    return if (check == 1) {
+        "$parts[0].$parts[1].$parts[2]"
+    } else ""
+}
+
+
+
 
 /**
  * Средняя (4 балла)

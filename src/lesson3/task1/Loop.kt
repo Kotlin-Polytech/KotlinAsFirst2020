@@ -75,10 +75,17 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var answer = 1
-    while (10.0.pow(answer) <= n)
-        answer += 1
-    return answer
+    var number = n
+    var answer = 0
+    return if (n == 0) 1
+    else {
+        while (number != 0) {
+            number /= 10
+            answer++
+        }
+        answer
+    }
+
 }
 
 /**
@@ -105,14 +112,10 @@ fun fib(n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-    var a = 2
-    if (n % 2 == 0) a = 2
-    else {
-        a = 3
-        while (n % a != 0)
-            a += 2
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0) return i
     }
-    return a
+    return n
 }
 
 /**
@@ -140,11 +143,11 @@ fun maxDivisor(n: Int): Int = TODO()
  */
 fun collatzSteps(x: Int): Int {
     var s = 0
-    while (x != 1) {
+    var number = x
+    while (number != 1) {
+        if (number % 2 == 0) number /= 2
+        else number = 3 * number + 1
         s += 1
-        if (x % 2 == 0)
-            collatzSteps(x / 2)
-        else collatzSteps(x * 3 + 1)
     }
     return s
 }
