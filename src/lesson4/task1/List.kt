@@ -223,19 +223,7 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = buildString {
-    var x = n
-    val result = mutableListOf<Int>()
-    while (x > 0) {
-        result += x % base
-        x /= base
-    }
-    for (i in result.reversed()) {
-        if (i < 10)
-            append(i)
-        else append('a' - 10 + i)
-    }
-}
+fun convertToString(n: Int, base: Int): String = TODO()
 
 
 /**
