@@ -66,28 +66,27 @@ fun circleInside(
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var x1 = 0
     var x2 = 0
-    var x3 = 0
     var t1 = 0
     var t2 = 0
     if (b > a) {
         if (c > a) {
-            x1 = b
+            x1 = a
             x2 = c
-            x3 = a
+
         } else {
-            x1 = b
+            x1 = c
             x2 = a
-            x3 = c
+
         }
     } else {
         if (b > c) {
-            x1 = a
+            x1 = c
             x2 = b
-            x3 = c
+
         } else {
-            x1 = a
+            x1 = b
             x2 = c
-            x3 = b
+
         }
     }
     if (r > s) {
@@ -97,5 +96,5 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
         t2 = r
         t1 = s
     }
-    return (x1 <= t1 && (x2 <= t2 || x3 <= t2)) || (x2 <= t1 && x3 <= t2)
+    return ((x1 <= t2) && (x2 <= t1))
 }

@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import lesson1.task1.seconds
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -200,11 +202,16 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  */
 fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
     var productName: String? = null
-    var minCost = Double.MAX_VALUE
+    var minCost: Double? = null
     for ((key, value) in stuff) {
-        if (value.first == kind && value.second <= minCost) {
-            minCost = value.second
-            productName = key
+        if (value.first == kind) {
+            if (minCost == null) {
+                productName = key
+                minCost = value.second
+            } else {
+                minCost = value.second
+                productName = key
+            }
         }
     }
     return productName

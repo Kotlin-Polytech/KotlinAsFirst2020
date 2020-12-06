@@ -77,12 +77,12 @@ fun main() {
  * входными данными.
  */
 
-val Date = mapOf<String, Int>(
+val date = mapOf<String, Int>(
     "января" to 31,
     "февраля" to 28,
     "марта" to 31,
     "апреля" to 30,
-    "майя" to 31,
+    "мая" to 31,
     "июня" to 30,
     "июля" to 31,
     "августа" to 31,
@@ -95,15 +95,15 @@ val Date = mapOf<String, Int>(
 fun dateStrToDigit(str: String): String {
     var parts = str.split(" ")
     if (parts.size != 3) return ""
-    var check = -1
+    var check = false
     var numberMonth = 1.toInt()
     var day = parts[0].toInt()
     var dayAnswer = "".toString()
     var month = parts[1].toString()
     val year = parts[2].toInt()
-    for ((m, d) in Date) {
+    for ((m, d) in date) {
         if (month == m && day <= d) {
-            check = 1
+            check = true
             month = if (numberMonth < 10) ("0$numberMonth")
             else numberMonth.toString()
         }
@@ -111,7 +111,7 @@ fun dateStrToDigit(str: String): String {
     }
     dayAnswer = if (day < 10) "0$day"
     else "$day"
-    return if (check == 1) {
+    return if (check) {
         "$dayAnswer.$month.$year"
     } else ""
 }
@@ -213,18 +213,19 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше нуля либо равны нулю.
  */
 fun mostExpensive(description: String): String {
-    var parts = description.replace(";", "").split(" ")
-    var cost = 0.0
+    val parts = """([\S&&[^;]]+)\s(\d+(\.\d+)?)""".toRegex().findAll(description)
+    var cost = -1.0
     var answer = ""
-    for (i in 1 until parts.size step 2) {
-        if (parts[i].toDouble() > cost) {
-            cost = parts[i].toDouble()
-            answer = parts[i - 1]
+    for (i in parts) {
+        if (i.groupValues[2].toDouble() > cost) {
+            cost = i.groupValues[2].toDouble()
+            answer = i.groupValues[1]
         }
     }
     return answer
 
 }
+
 
 /**
  * Сложная (6 баллов)
