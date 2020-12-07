@@ -97,10 +97,11 @@ fun dateStrToDigit(str: String): String {
     if (parts.size != 3) return ""
     var check = false
     var numberMonth = 1.toInt()
-    var day = parts[0].toInt()
+    var day = parts[0].toIntOrNull() ?: return ""
     var dayAnswer = "".toString()
     var month = parts[1].toString()
-    val year = parts[2].toInt()
+    var year = parts[2].toIntOrNull() ?: return ""
+
     for ((m, d) in date) {
         if (month == m && ((day <= d) || (((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) && m == "февраля" && day == 29))) {
             check = true
