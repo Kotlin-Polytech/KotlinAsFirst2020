@@ -102,7 +102,7 @@ fun dateStrToDigit(str: String): String {
     var month = parts[1].toString()
     val year = parts[2].toInt()
     for ((m, d) in date) {
-        if (month == m && day <= d) {
+        if (month == m && ((day <= d) || (((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) && m == "февраля" && day == 29))) {
             check = true
             month = if (numberMonth < 10) ("0$numberMonth")
             else numberMonth.toString()
@@ -115,6 +115,7 @@ fun dateStrToDigit(str: String): String {
         "$dayAnswer.$month.$year"
     } else ""
 }
+
 
 
 /**

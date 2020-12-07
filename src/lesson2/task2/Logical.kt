@@ -68,10 +68,10 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var x2 = 0
     var t1 = 0
     var t2 = 0
-    if (b > a) {
-        if (c > a) {
+    if (a <= b) {
+        if (b <= c) {
             x1 = a
-            x2 = c
+            x2 = b
 
         } else {
             x1 = c
@@ -79,22 +79,22 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
 
         }
     } else {
-        if (b > c) {
+        if (c <= a) {
             x1 = c
             x2 = b
 
         } else {
-            x1 = b
-            x2 = c
+            x1 = a
+            x2 = b
 
         }
     }
-    if (r > s) {
+    if (r >= s) {
+        t1 = s
+        t2 = r
+    } else {
         t1 = r
         t2 = s
-    } else {
-        t2 = r
-        t1 = s
     }
-    return ((x1 <= t2) && (x2 <= t1))
+    return (((x1 <= t2) && (x2 <= t1)) || ((x2 <= t2) && (x1 <= t1)))
 }

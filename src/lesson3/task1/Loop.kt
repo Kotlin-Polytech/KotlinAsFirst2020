@@ -3,6 +3,7 @@
 package lesson3.task1
 
 
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -76,7 +77,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var a = 1
-    while (10.0.pow(a) <= n)
+    while (10.0.pow(a) <= abs(n))
         a++
     return a
 }
