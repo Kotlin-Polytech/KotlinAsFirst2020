@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import ru.spbstu.kotlin.generate.combinators.shrinkIterable
 
 /**
  * Пример
@@ -42,6 +43,7 @@ fun daysInMonth(month: Int, year: Int): Int =
         1, 3, 5, 7, 8, 10, 12 -> 31
         else -> 30
     }
+
 /**
  * Простая (2 балла)
  *
@@ -69,24 +71,31 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     var t1 = 0
     var t2 = 0
     if (a <= b) {
-        if (b <= c) {
-            x1 = a
-            x2 = b
-
+        if (a <= c) {
+            if (b <= c) {
+                x1 = a
+                x2 = b
+            } else {
+                x1 = a
+                x2 = c
+            }
         } else {
             x1 = c
             x2 = a
-
         }
+
     } else {
-        if (c <= a) {
+        if (b <= c) {
+            if (c <= a) {
+                x1 = b
+                x2 = c
+            } else {
+                x1 = b
+                x2 = a
+            }
+        } else {
             x1 = c
             x2 = b
-
-        } else {
-            x1 = a
-            x2 = b
-
         }
     }
     if (r >= s) {
@@ -96,5 +105,5 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
         t1 = r
         t2 = s
     }
-    return (((x1 <= t2) && (x2 <= t1)) || ((x2 <= t2) && (x1 <= t1)))
+    return ((x1 <= t1) && (x2 <= t2))
 }

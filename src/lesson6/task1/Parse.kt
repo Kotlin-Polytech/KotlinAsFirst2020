@@ -93,15 +93,14 @@ val date = mapOf<String, Int>(
 )
 
 fun dateStrToDigit(str: String): String {
-    var parts = str.split(" ")
+    val parts = str.split(" ")
     if (parts.size != 3) return ""
     var check = false
-    var numberMonth = 1.toInt()
-    var day = parts[0].toIntOrNull() ?: return ""
-    var dayAnswer = "".toString()
-    var month = parts[1].toString()
-    var year = parts[2].toIntOrNull() ?: return ""
-
+    var numberMonth = 1
+    val day = parts[0].toIntOrNull() ?: return ""
+    var dayAnswer = ""
+    var month = parts[1]
+    val year = parts[2].toIntOrNull() ?: return ""
     for ((m, d) in date) {
         if (month == m && ((day <= d) || (((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) && m == "февраля" && day == 29))) {
             check = true
