@@ -3,10 +3,7 @@
 package lesson8.task1
 
 import lesson1.task1.sqr
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 8: простые классы
 // Максимальное количество баллов = 40 (без очень трудных задач = 11)
@@ -82,7 +79,13 @@ data class Circle(val center: Point, val radius: Double) {
      * расстояние между их центрами минус сумма их радиусов.
      * Расстояние между пересекающимися окружностями считать равным 0.0.
      */
-    fun distance(other: Circle): Double = TODO()
+    fun distance(other: Circle): Double {
+        val distanceCircle =
+            other.center.distance(center) - other.radius - radius
+        return if (distanceCircle > 0.0) {
+            distanceCircle
+        } else 0.0
+    }
 
     /**
      * Тривиальная (1 балл)
@@ -163,14 +166,16 @@ fun lineBySegment(s: Segment): Line = TODO()
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = TODO()
+fun lineByPoints(a: Point, b: Point): Line = Line(a, (PI + atan((b.y - a.y) / (b.x - a.x))) % PI)
 
 /**
  * Сложная (5 баллов)
  *
  * Построить серединный перпендикуляр по отрезку или по двум точкам
  */
-fun bisectorByPoints(a: Point, b: Point): Line = TODO()
+fun bisectorByPoints(a: Point, b: Point): Line =
+    Line(Point((a.x + b.x) / 2, (a.y + b.y) / 2), ((lineByPoints(a, b).angle) + PI / 2) % PI)
+
 
 /**
  * Средняя (3 балла)
@@ -184,7 +189,20 @@ fun bisectorByPoints(a: Point, b: Point): Line = TODO()
  *
  * Если в списке менее двух окружностей, бросить IllegalArgumentException
  */
-fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> = TODO()
+fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
+    if (circles.size < 2) throw IllegalArgumentException()
+    var result = Pair(Circle(Point(0.0, 0.0), 0.0), Circle(Point(0.0, 0.0), 0.0))
+    var minDistance = 2 * (Double.MAX_VALUE)
+    for (i in circles.indices) {
+        for (j in (i + 1) until circles.size) {
+            if (circles[i].distance(circles[j]) < minDistance) {
+                result = Pair(circles[i], circles[j])
+                minDistance = circles[i].distance(circles[j])
+            }
+        }
+    }
+    return (result)
+}
 
 /**
  * Сложная (5 баллов)
