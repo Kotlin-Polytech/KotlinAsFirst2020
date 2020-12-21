@@ -166,7 +166,10 @@ fun lineBySegment(s: Segment): Line = TODO()
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = Line(a, (PI + atan((b.y - a.y) / (b.x - a.x))) % PI)
+fun lineByPoints(a: Point, b: Point): Line {
+    return if (atan((b.y - a.y) / (b.x - a.x)) > 0) Line(a, atan((b.y - a.y) / (b.x - a.x)) % PI)
+    else Line(a, (PI + (atan((b.y - a.y) / (b.x - a.x)))) % PI)
+}
 
 /**
  * Сложная (5 баллов)
