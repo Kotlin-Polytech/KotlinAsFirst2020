@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import java.lang.StringBuilder
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,47 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+
+val date = mapOf<String, Int>(
+    "января" to 31,
+    "февраля" to 28,
+    "марта" to 31,
+    "апреля" to 30,
+    "мая" to 31,
+    "июня" to 30,
+    "июля" to 31,
+    "августа" to 31,
+    "сентября" to 30,
+    "октября" to 31,
+    "ноября" to 30,
+    "декабря" to 31
+)
+
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    if (parts.size != 3) return ""
+    var check = false
+    var numberMonth = 1
+    val day = parts[0].toIntOrNull() ?: return ""
+    var dayAnswer = ""
+    var month = parts[1]
+    val year = parts[2].toIntOrNull() ?: return ""
+    for ((m, d) in date) {
+        if (month == m && ((day <= d) || (((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) && m == "февраля" && day == 29))) {
+            check = true
+            month = if (numberMonth < 10) ("0$numberMonth")
+            else numberMonth.toString()
+        }
+        numberMonth++
+    }
+    dayAnswer = if (day < 10) "0$day"
+    else "$day"
+    return if (check) {
+        "$dayAnswer.$month.$year"
+    } else ""
+}
+
+
 
 /**
  * Средняя (4 балла)
@@ -149,7 +191,16 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var k = 0
+    val words = str.toLowerCase().split(" ")
+    for (i in 0 until words.size - 1) {
+        if (words[i] == words[i + 1]) return k
+        k += words[i].length + 1
+    }
+    k = -1
+    return k
+}
 
 /**
  * Сложная (6 баллов)
@@ -162,7 +213,20 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val parts = """([\S&&[^;]]+)\s(\d+(\.\d+)?)""".toRegex().findAll(description)
+    var cost = -1.0
+    var answer = ""
+    for (i in parts) {
+        if (i.groupValues[2].toDouble() > cost) {
+            cost = i.groupValues[2].toDouble()
+            answer = i.groupValues[1]
+        }
+    }
+    return answer
+
+}
+
 
 /**
  * Сложная (6 баллов)

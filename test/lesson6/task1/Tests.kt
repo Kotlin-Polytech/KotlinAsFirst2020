@@ -34,8 +34,8 @@ class Tests {
     @Test
     @Tag("4")
     fun dateStrToDigit() {
-        assertEquals("15.07.2016", dateStrToDigit("15 июля 2016"))
-        assertEquals("", dateStrToDigit("3 мартобря 1918"))
+        assertEquals("01.07.1", dateStrToDigit("01 июля 1"))
+        assertEquals("29.02.4", dateStrToDigit("29 февраля 4"))
         assertEquals("18.11.2018", dateStrToDigit("18 ноября 2018"))
         assertEquals("", dateStrToDigit("23"))
         assertEquals("03.04.2011", dateStrToDigit("3 апреля 2011"))

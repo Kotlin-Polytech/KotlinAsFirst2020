@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+
+import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -72,7 +75,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var a = 1
+    while (10.0.pow(a) <= abs(n))
+        a++
+    return a
+}
 
 /**
  * Простая (2 балла)
@@ -80,14 +88,29 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fib = 1
+    var l = 1
+    var m = 0
+    for (i in 1 until n) {
+        fib = l + m
+        m = l
+        l = fib
+    }
+    return fib
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0) return i
+    }
+    return n
+}
 
 /**
  * Простая (2 балла)
@@ -112,7 +135,16 @@ fun maxDivisor(n: Int): Int = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var s = 0
+    var number = x
+    while (number != 1) {
+        if (number % 2 == 0) number /= 2
+        else number = 3 * number + 1
+        s += 1
+    }
+    return s
+}
 
 /**
  * Средняя (3 балла)
@@ -188,7 +220,7 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
- * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
+ * Использовать kotlin.math.cos и д ругие стандартные реализации функции косинуса в этой задаче запрещается.
  */
 fun cos(x: Double, eps: Double): Double = TODO()
 
@@ -196,12 +228,12 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Сложная (4 балла)
  *
  * Найти n-ю цифру последовательности из квадратов целых чисел:
- * 149162536496481100121144...
+ * 149163256496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int = digit(n) { it * it }
 
 /**
  * Сложная (5 баллов)
@@ -212,4 +244,19 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int = digit(n) { fib(it) }
+
+fun digit(n: Int, f: (Int) -> Int): Int {
+    var i = 0
+    var number = 0
+    var amountNumbers = 0
+    while (number < n) {
+        i += 1
+        amountNumbers = f(i)
+        while (amountNumbers != 0) {
+            number += 1
+            amountNumbers /= 10
+        }
+    }
+    return (f(i) / 10.0.pow(number - n) % 10).toInt()
+}

@@ -65,7 +65,7 @@ fun main() {
  * Пользователь задает время в часах, минутах и секундах, например, 8:20:35.
  * Рассчитать время в секундах, прошедшее с начала суток (30035 в данном случае).
  */
-fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
+fun seconds(hours: Int, minutes: Int, seconds: Int): Int = (hours * 60 * 60) + (minutes * 60) + seconds
 
 /**
  * Тривиальная (1 балл)
@@ -75,6 +75,7 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = TODO()
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
+
 
 /**
  * Тривиальная (1 балл)
@@ -92,13 +93,15 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double = TODO()
  */
 fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = TODO()
 
+
 /**
  * Простая (2 балла)
  *
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = TODO()
+fun thirdDigit(number: Int): Int = (number / 100) % 10
+
 
 /**
  * Простая (2 балла)
@@ -107,7 +110,8 @@ fun thirdDigit(number: Int): Int = TODO()
  * прибыл на станцию назначения в h2 часов m2 минут того же дня (например в 13:01).
  * Определите время поезда в пути в минутах (в данном случае 216).
  */
-fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int = TODO()
+fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minutesArrive: Int): Int =
+    (hoursArrive * 60 + minutesArrive) - (hoursDepart * 60 + minutesDepart)
 
 /**
  * Простая (2 балла)
@@ -124,4 +128,4 @@ fun accountInThreeYears(initial: Int, percent: Int): Double = TODO()
  * Пользователь задает целое трехзначное число (например, 478).
  * Необходимо вывести число, полученное из заданного перестановкой цифр в обратном порядке (например, 874).
  */
-fun numberRevert(number: Int): Int = TODO()
+fun numberRevert(number: Int): Int = ((number % 10) * 100) + ((number / 10) % 10) * 10 + number / 100
