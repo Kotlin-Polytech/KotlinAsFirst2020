@@ -72,7 +72,6 @@ class PhoneBook {
         var bookListBackUp = bookList
         var numb = -1
         var check: Boolean = false
-        var check2:Boolean = true
         for(i in bookList){
             numb += 1
             if(i.getNumberList().contains(phone)) return false
