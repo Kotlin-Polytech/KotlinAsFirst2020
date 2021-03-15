@@ -69,14 +69,20 @@ class PhoneBook {
      * либо такой номер телефона зарегистрирован за другим человеком.
      */
     fun addPhone(name: String, phone: String): Boolean {
+        var bookListBackUp = bookList
         var numb = -1
         var check: Boolean = false
+        var check2:Boolean = true
         for(i in bookList){
             numb += 1
-            if(i.getName() == name && !i.getNumberList().contains(phone)) {
-                check = true
-                bookList[numb] = i.addNumber(phone)
+            if(i.getNumberList().contains(phone)) return false
+            else {
+                if (i.getName() == name && !i.getNumberList().contains(phone)) {
+                    check = true
+                    bookList[numb] = i.addNumber(phone)
+                }
             }
+
         }
         return check
     }
