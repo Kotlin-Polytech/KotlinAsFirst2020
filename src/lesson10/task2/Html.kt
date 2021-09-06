@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package lesson10.task2
 
 import kotlinx.html.*
