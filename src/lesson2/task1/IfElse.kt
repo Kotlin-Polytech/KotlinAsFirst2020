@@ -3,7 +3,9 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -69,9 +71,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if (((5 <= age % 10) && (age % 10 <= 9)) || (age % 10 == 0) || (11 <= (age % 100) && ((age % 100) <= 14))) return "$age лет"
-    else if (age % 10 == 1) return "$age год"
-    else if (1 < (age % 10) && (age % 10) < 5) return "$age года"
+    if (((5 <= age % 10) && (age % 10 <= 9)) || (age % 10 == 0) || (11 <= (age % 100) && ((age % 100) <= 14)))
+        return "$age лет"
+    else if (age % 10 == 1)
+        return "$age год"
+    else if (1 < (age % 10) && (age % 10) < 5)
+        return "$age года"
     return "ошибка"
 }
 
@@ -87,6 +92,18 @@ fun timeForHalfWay(
     t2: Double, v2: Double,
     t3: Double, v3: Double
 ): Double {
+    val s = (t1 * v1) + (t2 * v2) + (t3 * v3)
+    val s1 = t1 * v1
+    val s2 = t2 * v2
+    val s3 = t3 * v3
+    if (0 <= (s / 2) && (s / 2) <= s1)
+        return t1 * ((s / 2) / s1)
+    else if (s1 <= (s / 2) && (s / 2) <= s2)
+        return t1 + t2 * ((s / 2) / s2)
+    else (s2 <= (s / 2) && (s / 2) <= s3)
+    return t1 + t2 + t2 * ((s / 2) / s3)
+
+
 }
 
 /**
@@ -128,7 +145,22 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    return if ((c > a + b) || (a > c + b) || (b > a + c)) -1
+    else if ((a >= b) && (a >= c)) {
+        if (sqr(b) + sqr(c) == sqr(a)) 1
+        else if (sqr(b) + sqr(c) > sqr(a)) 0
+        else 2
+    } else if ((b >= c) && (b >= a)) {
+        if (sqr(a) + sqr(c) == sqr(b)) 1
+        else if (sqr(a) + sqr(c) > sqr(b)) 0
+        else 2
+    } else {
+        if (sqr(a) + sqr(b) == sqr(c)) 1
+        else if (sqr(a) + sqr(b) > sqr(c)) 0
+        else 2
+    }
+}
 
 /**
  * Средняя (3 балла)
@@ -138,4 +170,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return if ((a < c) && (c < b))
+        min(d, b) - c
+    else if ((c < a) && (a < d))
+        min(d, b) - a
+    else if (b == c)
+        0
+    else
+        -1
+}
