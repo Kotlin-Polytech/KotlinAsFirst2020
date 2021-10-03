@@ -4,6 +4,7 @@ package lesson2.task1
 
 import lesson1.task1.discriminant
 import kotlin.math.max
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -68,7 +69,12 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    if (((age%100)>9)&&((age%100)<20)) return (age.toString()+" лет")
+    if  (((age%10)>=2)&&((age%10)<=4)) return (age.toString()+" года")
+    if  ((age%10)==1) return (age.toString()+" год")
+    return (age.toString()+" лет")
+}
 
 /**
  * Простая (2 балла)
