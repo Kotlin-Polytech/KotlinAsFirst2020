@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import lesson1.task1.sqr
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -80,7 +81,19 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var result = 0
+    var x = 1
+    var a = 1
+    if ((n == 1) || (n == 2))
+        return 1
+    for (i in 3..n) {
+        result = a + x
+        x = a
+        a = result
+    }
+    return result
+}
 
 /**
  * Простая (2 балла)
@@ -192,7 +205,28 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    if (n == 0) return 0
+    var long = 0
+    var num = 0
+    while (true) {
+        num += 1
+        var a = sqr(num)
+        while (a != 0) {
+            long += 1
+            a /= 10
+        }
+        if (long == n)
+            return sqr(num) % 10
+        else if (long > n) {
+            var q = sqr(num)
+            for (i in 1..(long - n))
+                q /= 10
+            return q % 10
+        }
+    }
+
+}
 
 /**
  * Сложная (5 баллов)
@@ -203,4 +237,22 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var countLetters = 2
+    var result = 0
+    var x = 1
+    var a = 1
+    //var numberFib = 1
+    if (n == 1 || n == 2)
+        return 1
+    while (n < countLetters) {
+        result = a + x
+        x = a
+        a = result
+        while (result / 10 != 0 || result % 10 != 0)
+            countLetters += 1
+        result /= 10
+    }
+
+    return countLetters
+}

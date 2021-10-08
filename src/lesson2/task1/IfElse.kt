@@ -70,15 +70,13 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
+fun ageDescription(age: Int): String =
     if (((5 <= age % 10) && (age % 10 <= 9)) || (age % 10 == 0) || (11 <= (age % 100) && ((age % 100) <= 14)))
-        return "$age лет"
+        "$age лет"
     else if (age % 10 == 1)
-        return "$age год"
-    else if (1 < (age % 10) && (age % 10) < 5)
-        return "$age года"
-    return "ошибка"
-}
+        "$age год"
+    else
+        "$age года"
 
 /**
  * Простая (2 балла)
@@ -145,8 +143,8 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int {
-    return if ((c > a + b) || (a > c + b) || (b > a + c)) -1
+fun triangleKind(a: Double, b: Double, c: Double) =
+    if ((c > a + b) || (a > c + b) || (b > a + c)) -1
     else if ((a >= b) && (a >= c)) {
         if (sqr(b) + sqr(c) == sqr(a)) 1
         else if (sqr(b) + sqr(c) > sqr(a)) 0
@@ -160,7 +158,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         else if (sqr(a) + sqr(b) > sqr(c)) 0
         else 2
     }
-}
+
 
 /**
  * Средняя (3 балла)
@@ -175,7 +173,7 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
         min(d, b) - c
     else if ((c < a) && (a < d))
         min(d, b) - a
-    else if (b == c)
+    else if (((a == b) && (a in c..d)) || ((c == d) && (c in a..b)) || (b == c))
         0
     else
         -1
