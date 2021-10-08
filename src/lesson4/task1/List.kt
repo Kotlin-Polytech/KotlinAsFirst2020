@@ -127,7 +127,20 @@ fun abs(v: List<Double>): Double = TODO()
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    return if (list.isEmpty())
+        0.0
+    else {
+        var a = 0.0
+        var b = 0
+        for (i in list) {
+            a += i
+            b += 1
+        }
+        a / b
+    }
+}
+
 
 /**
  * Средняя (3 балла)
@@ -137,7 +150,12 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    val average = mean(list)
+    for (i in 0 until list.size)
+        list[i] -= average
+    return list
+}
 
 /**
  * Средняя (3 балла)
@@ -250,7 +268,8 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String {
+fun russian(n: Int): String = TODO()
+/*{
     val for1 = listOf("один", "одна ")
     val for2 = listOf("два", "две ")
     val for3 = listOf("три", "три ")
@@ -261,7 +280,7 @@ fun russian(n: Int): String {
     val for8 = listOf("восемь", "восемь ")
     val for9 = listOf("девять", "девять ")
     val num = mutableListOf<String>()
-    if (n / 100 != 0){
+    if (n / 100 != 0) {
         when (n / 100) {
             1 -> num.add("сто ")
             2 -> num.add("двести ")
@@ -273,7 +292,7 @@ fun russian(n: Int): String {
             8 -> num.add("восемьсот ")
             9 -> num.add("девятьсот ")
         }
-    if (n / 10 != 0)
+        if (n / 10 != 0)
 
 
-}
+    } */
