@@ -238,21 +238,23 @@ fun squareSequenceDigit(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int {
-    var countLetters = 2
-    var result = 0
-    var x = 1
-    var a = 1
-    //var numberFib = 1
-    if (n == 1 || n == 2)
-        return 1
-    while (n < countLetters) {
-        result = a + x
-        x = a
-        a = result
-        while (result / 10 != 0 || result % 10 != 0)
-            countLetters += 1
-        result /= 10
+    if (n == 1 || n == 2) return 1
+    var long = 0
+    var counter = 0
+    while (true) {
+        counter += 1
+        var a = fib(counter)
+        var result = a
+        while (a != 0) {
+            long += 1
+            a /= 10
+        }
+        if (long == n)
+            return result % 10
+        else if (long > n) {
+            for (i in 1..(long - n))
+                result /= 10
+            return result % 10
+        }
     }
-
-    return countLetters
 }
