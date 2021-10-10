@@ -72,7 +72,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var quantity = 1
+    var number = n
+    while (number / 10 != 0) {
+        quantity++
+        number = number / 10
+    }
+    return quantity
+}
 
 /**
  * Простая (2 балла)
@@ -80,7 +88,19 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    if (n in 1..2) return 1
+    var one = 1
+    var two = 1
+    var count = 2
+    while (count < n) {
+        count++
+        val three = one + two
+        one = two
+        two = three
+    }
+    return two
+}
 
 /**
  * Простая (2 балла)
@@ -138,7 +158,15 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var reverse = 0
+    var number = n
+    while (number != 0) {
+        reverse = reverse * 10 + (number % 10)
+        number = number / 10
+    }
+    return reverse
+}
 
 /**
  * Средняя (3 балла)
@@ -149,7 +177,7 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean = revert(n) == n
 
 /**
  * Средняя (3 балла)
