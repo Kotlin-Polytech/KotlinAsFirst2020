@@ -89,7 +89,7 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double {
+): Double = TODO() /* {
     val s = (t1 * v1) + (t2 * v2) + (t3 * v3)
     val s1 = t1 * v1
     val s2 = t2 * v2
@@ -103,7 +103,7 @@ fun timeForHalfWay(
 
 
 }
-
+*/
 /**
  * Простая (2 балла)
  *
@@ -171,7 +171,7 @@ fun triangleKind(a: Double, b: Double, c: Double) =
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     return if ((a < c) && (c < b))
         min(d, b) - c
-    else if ((c < a) && (a < d))
+    else if ((c < a) && (a < d) || (b == a) && (c == d))
         min(d, b) - a
     else if (((a == b) && (a in c..d)) || ((c == d) && (c in a..b)) || (b == c))
         0
