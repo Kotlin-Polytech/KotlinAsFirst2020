@@ -67,4 +67,19 @@ fun isNumberHappy(number: Int): Boolean = (number / 1000) +(number / 100) % 10 =
      * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
      * Вернуть true, если кирпич пройдёт
      */
-    fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+    fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+        val minBrick = minOf(a, b, c)
+        val maxBrick = maxOf(a, b, c)
+        val minHole = minOf(r, s)
+        val maxHole = maxOf(r, s)
+        val midBrick = (a + b + c) - minBrick - maxBrick
+        return when {
+            minHole < minBrick -> false
+            a == minBrick && maxHole >= b || maxHole >= c -> true
+            b == minBrick && maxHole >= a || maxHole >= c -> true
+            c == minBrick && maxHole >= a || maxHole >= b -> true
+            else -> false
+        }
+
+
+    }

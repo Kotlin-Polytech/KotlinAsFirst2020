@@ -120,15 +120,14 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = sqrt(v.sumByDouble { it * it })
+fun abs(v: List<Double>): Double = TODO()
 
 /**
  * Простая (2 балла)
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double =
-    if (list.isEmpty()) 0.0 else list.sum() / list.size
+fun mean(list: List<Double>): Double = TODO()
 
 /**
  * Средняя (3 балла)
@@ -249,7 +248,7 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String = TODO() !!
 
 /**
  * Очень сложная (7 баллов)
