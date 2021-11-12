@@ -134,14 +134,8 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    var sum = 0.0
-    var shetcik = 0
-    for (i in 0 until list.size) {
-        sum += list[i]
-        shetcik++
-    }
-    if (shetcik == 0) return 0.0
-    return sum / shetcik
+    return if (list.size != 0) list.sum() / list.size
+    else 0.0
 }
 
 /**
@@ -223,7 +217,19 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val alf = "abcdefghijklmnopqrstuvwxyz"
+    var number = n
+    var res = ""
+    while (number != 0) {
+        res =
+            (if (number % base < 10)
+                (number % base).toString()
+            else alf[number % base - 10].toString()) + res
+        number /= base
+    }
+    return res
+}
 
 /**
  * Средняя (3 балла)
@@ -256,7 +262,9 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    
+}
 
 /**
  * Очень сложная (7 баллов)
