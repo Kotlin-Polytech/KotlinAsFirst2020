@@ -228,7 +228,7 @@ fun convertToString(n: Int, base: Int): String {
             else alf[number % base - 10].toString()) + res
         number /= base
     }
-    return res
+    return if (res != "") res else "0"
 }
 
 /**
