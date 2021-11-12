@@ -147,8 +147,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     val mal = min(b, d)
     val bol = max(a, c)
-    if ((mal - bol) >= 0) return mal - bol
-    else return -1
+    return if ((mal - bol) >= 0) (mal - bol) else -1
 }
 
 
