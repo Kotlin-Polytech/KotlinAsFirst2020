@@ -127,17 +127,11 @@ fun abs(v: List<Double>): Double = TODO()
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = if (list.isEmpty())
-    0.0
+fun mean(list: List<Double>) = if (list.isEmpty()) 0.0
 else {
-    var a = 0.0
-    var b = 0
-    for (i in list) {
-        a += i
-        b += 1
-    }
-    a / b
-sum(list)
+    list.sum() / list.size
+
+
 }
 
 
@@ -266,7 +260,52 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val a = listOf<String>("I", "V", "X", "L", "C", "D", "M")
+    val thousand = n / 1000
+    var result = ""
+    if (n > 999) for (i in 1..thousand) result += a[6]
+    val hundreds = n / 100 - thousand * 10
+    if (n > 99) {
+
+        when {
+            hundreds <= 3 -> for (i in 1..hundreds) result += a[4]
+            hundreds == 4 -> result += a[4] + a[5]
+            hundreds == 5 -> result += a[5]
+            hundreds == 6 -> result += a[5] + a[4]
+            hundreds == 7 -> result += a[5] + a[4] + a[4]
+            hundreds == 8 -> result += a[5] + a[4] + a[4] + a[4]
+            hundreds == 9 -> result += a[4] + a[6]
+        }
+    }
+    val dozens = n / 10 - hundreds * 10 - thousand * 100
+    if (n > 9) {
+
+        when {
+            dozens <= 3 -> for (i in 1..dozens) result += a[2]
+            dozens == 4 -> result += a[2] + a[3]
+            dozens == 5 -> result += a[3]
+            dozens == 6 -> result += a[3] + a[2]
+            dozens == 7 -> result += a[3] + a[2] + a[2]
+            dozens == 8 -> result += a[3] + a[2] + a[2] + a[2]
+            dozens == 9 -> result += a[2] + a[4]
+        }
+    }
+    val units = n % 10
+    when {
+        units <= 3 -> for (i in 1..units) result += a[0]
+        units == 4 -> result += a[0] + a[1]
+        units == 5 -> result += a[1]
+        units == 6 -> result += a[1] + a[0]
+        units == 7 -> result += a[1] + a[0] + a[0]
+        units == 8 -> result += a[1] + a[0] + a[0] + a[0]
+        units == 9 -> result += a[0] + a[2]
+    }
+
+
+
+    return result
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -276,30 +315,3 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String = TODO()
-/*{
-    val for1 = listOf("один", "одна ")
-    val for2 = listOf("два", "две ")
-    val for3 = listOf("три", "три ")
-    val for4 = listOf("четыре", "четыре ")
-    val for5 = listOf("пять", "пять ")
-    val for6 = listOf("шесть", "шесть ")
-    val for7 = listOf("семь", "семь ")
-    val for8 = listOf("восемь", "восемь ")
-    val for9 = listOf("девять", "девять ")
-    val num = mutableListOf<String>()
-    if (n / 100 != 0) {
-        when (n / 100) {
-            1 -> num.add("сто ")
-            2 -> num.add("двести ")
-            3 -> num.add("трста ")
-            4 -> num.add("четыреста ")
-            5 -> num.add("пятьсот ")
-            6 -> num.add("шестьсот ")
-            7 -> num.add("семьсот ")
-            8 -> num.add("восемьсот ")
-            9 -> num.add("девятьсот ")
-        }
-        if (n / 10 != 0)
-
-
-    } */
