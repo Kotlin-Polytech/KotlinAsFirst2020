@@ -62,12 +62,10 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val l = mutableListOf(a, b, c)
-    val l2 = mutableListOf(r, s)
+    val minBrick = minOf(a, b, c)
+    val maxBrick = maxOf(a, b, c)
     if (minOf(a, b, c) > minOf(r, s)) return false
-    l.remove(minOf(a, b, c))
-    l2.remove(minOf(r, s))
-    return (minOf(l[0], l[1]) <= l2[0])
+    return ((a + b + c - maxBrick - minBrick) <= maxOf(r, s))
 }
 
 

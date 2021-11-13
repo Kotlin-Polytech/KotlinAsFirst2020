@@ -95,8 +95,8 @@ fun minDivisor(n: Int): Int = TODO()
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    for (i in (n/2) downTo sqrt((n*1.0)).toInt()-1){
-        if ((n%i)==0) return i
+    for (i in (n / 2) downTo sqrt((n * 1.0)).toInt() - 1) {
+        if ((n % i) == 0) return i
     }
     return 1
 }
@@ -155,13 +155,13 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
 fun revert(n: Int): Int {
     var a = 0
     var n2 = n
-    while ((n2/10)>=1){
-        a+=n2%10
-        a*=10
-        n2-=n2%10
-        n2=n2/10
+    while ((n2 / 10) >= 1) {
+        a += n2 % 10
+        a *= 10
+        n2 -= n2 % 10
+        n2 = n2 / 10
     }
-    return a+n2
+    return a + n2
 }
 
 /**
