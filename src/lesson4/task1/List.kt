@@ -298,7 +298,7 @@ fun russian(n: Int): String {
         if ((end % 100) in 11..19) {
             answer += rus.get(end % 100)
             end -= end % 100
-            if (end > 0) answer = rus.get(end) + answer
+            if (end > 0) answer = rus.get(end) + " " + answer
         } else {
             answer += rus.get(end % 10)
             end -= end % 10
