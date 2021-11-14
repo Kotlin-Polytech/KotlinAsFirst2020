@@ -373,7 +373,7 @@ fun russian(n: Int): String {
         if ((beg % 100) in 11..19) {
             answer = rus.get(beg % 100) + " тысяч $answer"
             beg -= beg % 100
-            answer = rus.get(beg) + " " + answer
+            if (beg > 0) answer = rus.get(beg) + " " + answer
             return answer
         } else {
             val a = beg % 10
