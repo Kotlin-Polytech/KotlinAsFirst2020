@@ -250,4 +250,86 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val list = listOf(
+        Pair(900, "девятьсот"),
+        Pair(800, "восемьсот"),
+        Pair(700, "семьсот"),
+        Pair(600, "шестьсот"),
+        Pair(500, "пятьсот"),
+        Pair(400, "четыреста"),
+        Pair(300, "триста"),
+        Pair(200, "двести"),
+        Pair(100, "сто"),
+        Pair(90, "девяносто"),
+        Pair(80, "восемьдесят"),
+        Pair(70, "семьдесят"),
+        Pair(60, "шестьдесят"),
+        Pair(50, "пятьдесят"),
+        Pair(40, "сорок"),
+        Pair(30, "тридцать"),
+        Pair(20, "двадцать"),
+        Pair(19, "девятнадцать"),
+        Pair(18, "восемнадцать"),
+        Pair(17, "семнадцать"),
+        Pair(16, "шестнадцать"),
+        Pair(15, "пятнадцать"),
+        Pair(14, "четырнадцать"),
+        Pair(13, "тринадцать"),
+        Pair(12, "двенадцать"),
+        Pair(11, "одиннадцать"),
+        Pair(10, "десять"),
+        Pair(9, "девять"),
+        Pair(8, "восемь"),
+        Pair(7, "семь"),
+        Pair(6, "шесть"),
+        Pair(5, "пять"),
+        Pair(4, "четыре"),
+        Pair(3, "три"),
+        Pair(2, "два"),
+        Pair(1, "один"),
+        Pair(0, ""),
+    )
+    val rus = list.toMap()
+    var beg = n / 1000
+    var end = n % 1000
+    var answer = ""
+    if (end > 0) {
+        if ((end % 100) in 11..19) {
+            answer += rus.get(end % 100)
+            end -= end % 100
+            if (end > 0) answer = rus.get(end) + answer
+        } else {
+            answer += rus.get(end % 10)
+            end -= end % 10
+            if (end % 100 > 0) answer = rus.get(end % 100) + " " + answer
+            end -= end % 100
+            if (end > 0) answer = rus.get(end) + " " + answer
+        }
+    }
+    if (beg > 0) {
+
+        if ((beg % 100) in 11..19) {
+            answer = rus.get(beg % 100) + " тысяч $answer"
+            beg -= beg % 100
+            answer = rus.get(beg) + " " + answer
+            return answer
+        } else {
+
+            answer = when {
+                ((beg % 10 == 0) && (beg % 100 !in 10..20)) -> "тысяч "
+                ((beg % 10 == 1) && (beg % 100 !in 10..20)) -> "тысяча "
+                ((beg % 10 == 2) && (beg % 100 !in 10..20)) -> "две тысячи "
+                ((beg % 10 in 3..4) && (beg % 100 !in 10..20)) -> rus.get(beg) + "тысяч "
+                else -> rus.get(beg) + "тысяч "
+            } + answer
+            //answer = rus.get(beg % 10) + " " + answer
+            beg -= beg % 10
+            if (beg % 100 > 0) answer = rus.get(beg % 100) + " " + answer
+            beg -= beg % 100
+            if (beg > 0) answer = rus.get(beg) + " " + answer
+        }
+    }
+    if (answer[answer.lastIndex] == ' ') return answer.dropLast(1)
+    return answer
+}
