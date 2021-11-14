@@ -2,6 +2,8 @@
 
 package lesson3.task1
 
+import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -72,7 +74,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    if (n == 0) return 1
+    var a = n
+    var answer = 0
+    while (a != 0) {
+        answer += 1
+        a /= 10
+    }
+    return answer
+}
 
 /**
  * Простая (2 балла)
@@ -216,7 +227,23 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var a = 0
+    var l = 0
+    while (l < n) {
+        a += 1
+        l += digitNumber(a * a)
+    }
+    a *= a
+    if (l == n) return a % 10
+    else {
+        for (i in 1..l-n){
+            a -= a % 10
+            a /= 10
+        }
+        return a % 10
+    }
+}
 
 /**
  * Сложная (5 баллов)
