@@ -316,7 +316,7 @@ fun russian(n: Int): String {
             return answer
         } else {
 
-            answer = when {
+            if (beg % 10 > 0) answer = when {
                 ((beg % 10 == 0) && (beg % 100 !in 10..20)) -> " тысяч "
                 ((beg % 10 == 1) && (beg % 100 !in 10..20)) -> "одна тысяча "
                 ((beg % 10 == 2) && (beg % 100 !in 10..20)) -> "две тысячи "
