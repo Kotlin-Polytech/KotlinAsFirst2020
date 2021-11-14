@@ -317,11 +317,11 @@ fun russian(n: Int): String {
         } else {
 
             answer = when {
-                ((beg % 10 == 0) && (beg % 100 !in 10..20)) -> "тысяч "
-                ((beg % 10 == 1) && (beg % 100 !in 10..20)) -> "тысяча "
+                ((beg % 10 == 0) && (beg % 100 !in 10..20)) -> " тысяч "
+                ((beg % 10 == 1) && (beg % 100 !in 10..20)) -> "одна тысяча "
                 ((beg % 10 == 2) && (beg % 100 !in 10..20)) -> "две тысячи "
-                ((beg % 10 in 3..4) && (beg % 100 !in 10..20)) -> rus.get(beg) + "тысяч "
-                else -> rus.get(beg) + "тысяч "
+                ((beg % 10 in 3..4) && (beg % 100 !in 10..20)) -> rus.get(beg) + " тысячи "
+                else -> rus.get(beg % 10) + " тысяч "
             } + answer
             //answer = rus.get(beg % 10) + " " + answer
             beg -= beg % 10
