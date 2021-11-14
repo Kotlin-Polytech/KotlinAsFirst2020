@@ -281,12 +281,12 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     var a = -1
     var b = -1
     for (i in 0..list.size - 2)
-        for (j in i..list.size -1)
+        for (j in i + 1..list.size - 1)
             if (list[i] + list[j] == number) {
                 a = i
                 b = j
                 return Pair(a, b)
-        }
+            }
     return Pair(a, b)
 }
 
