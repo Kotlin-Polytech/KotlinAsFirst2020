@@ -360,14 +360,14 @@ fun russian(n: Int): String {
             answer += rus.get(end % 100)
             end -= end % 100
             if (end > 0) answer = rus.get(end) + " " + answer
-            if (answer[answer.lastIndex] == ' ') return answer.dropLast(1)
+            if (answer[answer.lastIndex] == ' ') answer = answer.dropLast(1)
         } else {
             answer += rus.get(end % 10)
             end -= end % 10
             if (end % 100 > 0) answer = rus.get(end % 100) + " " + answer
             end -= end % 100
             if (end > 0) answer = rus.get(end) + " " + answer
-            if (answer[answer.lastIndex] == ' ') return answer.dropLast(1)
+            if (answer[answer.lastIndex] == ' ') answer = answer.dropLast(1)
         }
     }
     if (beg > 0) {
