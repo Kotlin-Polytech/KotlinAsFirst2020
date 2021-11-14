@@ -315,7 +315,8 @@ fun russian(n: Int): String {
             answer = rus.get(beg) + " " + answer
             return answer
         } else {
-
+            val a = beg % 10
+            //val b = beg % 100
             if (beg % 10 > 0) answer = when {
                 ((beg % 10 == 0) && (beg % 100 !in 10..20)) -> " тысяч "
                 ((beg % 10 == 1) && (beg % 100 !in 10..20)) -> "одна тысяча "
@@ -325,6 +326,7 @@ fun russian(n: Int): String {
             } + answer
             //answer = rus.get(beg % 10) + " " + answer
             beg -= beg % 10
+            if (a == 0) answer = "тысяч $answer"
             if (beg % 100 > 0) answer = rus.get(beg % 100) + " " + answer
             beg -= beg % 100
             if (beg > 0) answer = rus.get(beg) + " " + answer
