@@ -237,7 +237,7 @@ fun squareSequenceDigit(n: Int): Int {
     a *= a
     if (l == n) return a % 10
     else {
-        for (i in 1..l-n){
+        for (i in 1..l - n) {
             a -= a % 10
             a /= 10
         }
