@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.NullableMonad.map
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -208,7 +210,30 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    var a = mutableListOf<Pair<String, Int>>()
+    for (i in list.indices) {
+        var c = false
+        for (j in a.indices) {
+
+            if (a[j].first == list[i]) {
+                a[j] = a[j].copy(second = a[j].second + 1)
+                c = true
+            }
+
+        }
+        if (c == false) a.add(Pair(list[i], 1))
+    }
+    var n = 0
+    for (i in a.indices) {
+        if (a[i - n].second == 1) {
+            a.remove(a[i - n])
+            n += 1
+        }
+
+    }
+    return a.toMap()
+}
 
 /**
  * Средняя (3 балла)
