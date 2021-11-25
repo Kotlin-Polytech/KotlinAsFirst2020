@@ -160,7 +160,10 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    TODO()
+    for ((key, value) in b) {
+        if (a.containsKey(key) && a[key] == value)
+            a.remove(key)
+    }
 }
 
 /**
@@ -170,7 +173,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = (a - (a - b)).distinct()
 
 /**
  * Средняя (3 балла)
@@ -336,3 +339,11 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+
+fun main() {
+    val a = mapOf("Emergency" to listOf("112", "qwe"), "Police" to listOf("02", "911"))
+    val b = a.map { xax ->
+        xax.key + xax.value.map { it + it }
+    }
+    println(b)
+}

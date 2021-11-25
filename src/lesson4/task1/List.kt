@@ -261,51 +261,78 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
+    val a = listOf(
+        Pair("I", 1),
+        Pair("IV", 4),
+        Pair("V", 5),
+        Pair("IX", 9),
+        Pair("X", 10),
+        Pair("XL", 40),
+        Pair("L", 50),
+        Pair("XC", 90),
+        Pair("C", 100),
+        Pair("CD", 400),
+        Pair("D", 500),
+        Pair("CM", 900),
+        Pair("M", 1000)
+    ).reversed()
+    val res = StringBuilder()
+    var x = n
+    for ((key, value) in a) {
+        while (x >= value) {
+            res.append(key)
+            x -= value
+        }
+    }
+return res.toString()
+
+} /*{
     val a = listOf<String>("I", "V", "X", "L", "C", "D", "M")
     val thousand = n / 1000
-    var result = ""
-    if (n > 999) for (i in 1..thousand) result += a[6]
+    val result = StringBuilder()
+    if (n > 999) for (i in 1..thousand) result.append(a[6])
     val hundreds = n / 100 - thousand * 10
     if (n > 99) {
 
         when {
-            hundreds <= 3 -> for (i in 1..hundreds) result += a[4]
-            hundreds == 4 -> result += a[4] + a[5]
-            hundreds == 5 -> result += a[5]
-            hundreds == 6 -> result += a[5] + a[4]
-            hundreds == 7 -> result += a[5] + a[4] + a[4]
-            hundreds == 8 -> result += a[5] + a[4] + a[4] + a[4]
-            hundreds == 9 -> result += a[4] + a[6]
+            hundreds <= 3 -> for (i in 1..hundreds) result.append(a[4])
+            hundreds == 4 -> result.append(a[4] + a[5])
+            hundreds == 5 -> result.append(a[5])
+            hundreds == 6 -> result.append(a[5] + a[4])
+            hundreds == 7 -> result.append(a[5] + a[4] + a[4])
+            hundreds == 8 -> result.append(a[5] + a[4] + a[4] + a[4])
+            hundreds == 9 -> result.append(a[4] + a[6])
         }
     }
     val dozens = n / 10 - hundreds * 10 - thousand * 100
     if (n > 9) {
 
         when {
-            dozens <= 3 -> for (i in 1..dozens) result += a[2]
-            dozens == 4 -> result += a[2] + a[3]
-            dozens == 5 -> result += a[3]
-            dozens == 6 -> result += a[3] + a[2]
-            dozens == 7 -> result += a[3] + a[2] + a[2]
-            dozens == 8 -> result += a[3] + a[2] + a[2] + a[2]
-            dozens == 9 -> result += a[2] + a[4]
+            dozens <= 3 -> for (i in 1..dozens) result.append(a[2])
+            dozens == 4 -> result.append(a[2] + a[3])
+            dozens == 5 -> result.append(a[3])
+            dozens == 6 -> result.append(a[3] + a[2])
+            dozens == 7 -> result.append(a[3] + a[2] + a[2])
+            dozens == 8 -> result.append(a[3] + a[2] + a[2] + a[2])
+            dozens == 9 -> result.append(a[2] + a[4])
         }
     }
     val units = n % 10
     when {
-        units <= 3 -> for (i in 1..units) result += a[0]
-        units == 4 -> result += a[0] + a[1]
-        units == 5 -> result += a[1]
-        units == 6 -> result += a[1] + a[0]
-        units == 7 -> result += a[1] + a[0] + a[0]
-        units == 8 -> result += a[1] + a[0] + a[0] + a[0]
-        units == 9 -> result += a[0] + a[2]
+        units <= 3 -> for (i in 1..units) result.append(a[0])
+        units == 4 -> result.append(a[0] + a[1])
+        units == 5 -> result.append(a[1])
+        units == 6 -> result.append(a[1] + a[0])
+        units == 7 -> result.append(a[1] + a[0] + a[0])
+        units == 8 -> result.append(a[1] + a[0] + a[0] + a[0])
+        units == 9 -> result.append(a[0] + a[2])
     }
 
 
 
-    return result
+    return result.toString()
 }
+*/
 
 /**
  * Очень сложная (7 баллов)
@@ -315,3 +342,7 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String = TODO()
+fun main() {
+    val a = "srf"
+    println(a.repeat(0))
+}
