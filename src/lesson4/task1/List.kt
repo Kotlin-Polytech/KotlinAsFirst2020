@@ -120,7 +120,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double = sqrt(v.sumOf { it * it })
 
 /**
  * Простая (2 балла)
@@ -157,7 +157,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int = a.mapIndexed { index, i -> i * b[index] }.sum()
 
 /**
  * Средняя (3 балла)
@@ -167,7 +167,19 @@ fun times(a: List<Int>, b: List<Int>): Int = TODO()
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int = TODO()
+fun polynom(p: List<Int>, x: Int): Int {
+    return if (p.isEmpty()) 0
+    else {
+        var a = 1
+        var res = 0
+        for (i in p) {
+            res += i * a
+            a *= x
+        }
+        res
+    }
+}
+
 
 /**
  * Средняя (3 балла)
@@ -196,7 +208,21 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> {
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var x = n
+    val res = mutableListOf<Int>()
+    while (x != 1) {
+        for (i in 2..x) {
+            if (x % i == 0) {
+                res.add(i)
+                x /= i
+                break
+            }
+        }
+
+    }
+    return res
+}
 
 /**
  * Сложная (4 балла)
@@ -205,7 +231,7 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String = (factorize(n).map { it.toString() }).joinToString(separator = "*")
 
 /**
  * Средняя (3 балла)
@@ -214,7 +240,19 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val res = mutableListOf<Int>()
+    var x = n
+    while (true) {
+        res.add(x % base)
+
+        if (x < base) {
+            break
+        }
+        x /= base
+    }
+    return res.reversed()
+}
 
 /**
  * Сложная (4 балла)
@@ -227,7 +265,16 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val a = 'a'
+    return convert(n, base).map {
+        if (it <= 9) {
+            return@map it
+        } else {
+            return@map a + (it - 10)
+        }
+    }.joinToString(separator = "")
+}
 
 /**
  * Средняя (3 балла)
@@ -236,7 +283,13 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int =
+    digits.reversed().mapIndexed() { index, i ->
+        var a = 1
+        (0 until index).forEach { a *= base }
+        a * i
+    }.sum()
+
 
 /**
  * Сложная (4 балла)
@@ -250,7 +303,14 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int =
+    decimal(
+        str.map {
+            if (it.isDigit()) it.digitToInt() else it.minus('a') + 10
+        },
+        base
+    )
+
 
 /**
  * Сложная (5 баллов)
@@ -284,7 +344,7 @@ fun roman(n: Int): String {
             x -= value
         }
     }
-return res.toString()
+    return res.toString()
 
 } /*{
     val a = listOf<String>("I", "V", "X", "L", "C", "D", "M")
@@ -342,7 +402,3 @@ return res.toString()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String = TODO()
-fun main() {
-    val a = "srf"
-    println(a.repeat(0))
-}
