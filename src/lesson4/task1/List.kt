@@ -2,6 +2,7 @@
 
 package lesson4.task1
 
+import kotlin.text.trim
 import lesson1.task1.discriminant
 import kotlin.math.sqrt
 
@@ -244,7 +245,21 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val rom = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val arabic = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    var answer = ""
+    var index = 0
+    var number = n
+    while (number > 0) {
+        while (number >= arabic[index]) {
+            answer += rom[index]
+            number -= arabic[index]
+        }
+        index++
+    }
+    return answer
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -253,4 +268,61 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+// val tens = listOf("", "", "", "", "", "", "", "", "", "", "", "", )
+fun russian(n: Int): String {
+    val unitsOne = listOf("", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
+    val unitsTwo = listOf("", " одна", " две", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
+    val teens = listOf(
+        "", " одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать",
+        " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать"
+    )
+    val tens = listOf(
+        "", " десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят",
+        " семьдесят", " восемьдесят", " девяносто"
+    )
+    val hundreds = listOf(
+        "", " сто", " двести", " триста", " четыреста", " пятьсот",
+        " шестьсот", " семьсот", " восемьсот", " девятьсот"
+    )
+
+    var answer = ""
+    val digits = mutableListOf(0, 0, 0, 0, 0, 0)
+
+    digits[0] = n / 100000
+    answer += hundreds[digits[0]]
+
+    digits[1] = n / 10000 % 10
+    digits[2] = n / 1000 % 10
+    answer += if (digits[1] == 1 && digits[2] != 0) {
+        teens[digits[2]] + " тысяч"
+    } else {
+        tens[digits[1]] + unitsTwo[digits[2]]
+    }
+
+    if (n / 1000 != 0) {
+        if (digits[1] != 1) {
+            answer += printThousands(digits[2])
+        }
+    }
+
+    digits[3] = n / 100 % 10
+    answer += hundreds[digits[3]]
+
+    digits[4] = n / 10 % 10
+    digits[5] = n % 10
+    answer += if (digits[4] == 1 && digits[5] != 0) {
+        teens[digits[5]]
+    } else {
+        tens[digits[4]] + unitsOne[digits[5]]
+    }
+    return (answer.trim())
+
+}
+
+fun printThousands(digit: Int): String {
+    return when (digit) {
+        1 -> " тысяча"
+        in 2..4 -> " тысячи"
+        else -> " тысяч"
+    }
+}
