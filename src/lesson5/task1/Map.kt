@@ -222,8 +222,18 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean = TODO()
+fun hasAnagrams(words: List<String>): Boolean {
+    val listTwo = ArrayList(words)
+    for (i in 0..listTwo.size - 1) {
+        listTwo[i] = listTwo[i].toCharArray().sorted().joinToString("")
+    }
 
+    val listFullSorted = listTwo.sorted()
+    for (i in 1..listFullSorted.size - 1) {
+        if (listFullSorted[i].equals(listFullSorted[i - 1])) return true
+    }
+    return false
+}
 /**
  * Сложная (5 баллов)
  *
@@ -277,7 +287,16 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO() // !!
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    if (list.size < 2) return -1 to -1
+    for (i in list.indices) {
+        val a = list.indexOf(number - list[i])
+        if (a != -1 && i != a) {
+            return Pair(i, a)
+        }
+    }
+    return Pair(-1, -1)
+}
 
 /**
  * Очень сложная (8 баллов)
@@ -300,4 +319,4 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO() // !!
  *     450
  *   ) -> emptySet()
  */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO() //!!
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
