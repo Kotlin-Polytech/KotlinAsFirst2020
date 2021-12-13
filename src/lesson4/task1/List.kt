@@ -265,7 +265,7 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-// val tens = listOf("", "", "", "", "", "", "", "", "", "", "", "", )
+
 fun russian(n: Int): String {
     val unitsOne = listOf("", " один", " два", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
     val unitsTwo = listOf("", " одна", " две", " три", " четыре", " пять", " шесть", " семь", " восемь", " девять")
@@ -291,15 +291,13 @@ fun russian(n: Int): String {
     digits[1] = n / 10000 % 10
     digits[2] = n / 1000 % 10
     answer += if (digits[1] == 1 && digits[2] != 0) {
-        teens[digits[2]] + " тысяч"
+        teens[digits[2]]
     } else {
         tens[digits[1]] + unitsTwo[digits[2]]
     }
 
     if (n / 1000 != 0) {
-        if (digits[1] != 1) {
-            answer += printThousands(digits[2])
-        }
+        answer += printThousands(digits[2])
     }
 
     digits[3] = n / 100 % 10

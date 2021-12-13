@@ -90,7 +90,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     var index = 0
     val file = File(inputName).readLines()
     for (line in file) {
-        for (string in substrings) {
+        for (string in substrings.toSet()) {
             while (index < line.length && index != -1) {
                 index = line.indexOf(string, index, true)
                 if (index != -1) {
