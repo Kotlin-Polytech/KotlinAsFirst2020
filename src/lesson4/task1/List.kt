@@ -297,7 +297,8 @@ fun russian(n: Int): String {
     }
 
     if (n / 1000 != 0) {
-        answer += printThousands(digits[2])
+        answer += if (digits[1] == 1) " тысяч"
+        else printThousands(digits[2])
     }
 
     digits[3] = n / 100 % 10
