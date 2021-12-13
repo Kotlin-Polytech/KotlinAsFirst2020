@@ -2,7 +2,6 @@
 
 package lesson5.task1
 
-import ru.spbstu.wheels.NullableMonad.filter
 
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
@@ -341,55 +340,63 @@ fun hasAnagrams(words: List<String>): Boolean {
  *          "GoodGnome" to setOf()
  *        )
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO() /*{
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()/*{
     val res =
-        mutableMapOf<String, MutableSet<String>>() //key чел кто жал руку, value список людей которым key ал руку, i конкретный чел которому жал руку key
+        mutableMapOf<String, MutableSet<String>>()
     for ((key, value) in friends) {
         res.put(key, mutableSetOf())
         value.forEach { res[key]?.add(it) }
-        while (true){ value.forEach { friends[it]?.forEach { res[key]?.add(it) } }
-
+        while (true) {
+            value.forEach { friends[it]?.forEach { res[key]?.add(it) } }
+            break
         }
     }
+    return res
+}*/
+
+/**
+ * Сложная (6 баллов)
+ *
+ * Для заданного списка неотрицательных чисел и числа определить,
+ * есть ли в списке пара чисел таких, что их сумма равна заданному числу.
+ * Если да, верните их индексы в виде Pair<Int, Int>;
+ * если нет, верните пару Pair(-1, -1).
+ *
+ * Индексы в результате должны следовать в порядке (меньший, больший).
+ *
+ * Постарайтесь сделать ваше решение как можно более эффективным,
+ * используя то, что вы узнали в данном уроке.
+ *
+ * Например:
+ *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
+ *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
+ */
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val a = mutableMapOf<Int, Int>()
+    var res = Pair(-1, -1)
+    list.forEachIndexed { index, firstVal ->
+        val secondVal = number - list[index]
+        if (secondVal in a.keys) res = Pair(a[secondVal]!!, index) else a[firstVal] = index
+    }
+    return res
+
+}
+
+
+
+
+/*{
+    var a = Pair(-1, -1)
+    list.mapIndexed { index1, it ->
+        list.mapIndexed { index2, i ->
+            if (it + i == number && index2 != index1) a = Pair(index2, index1)
+        }
+    }
+    return a
+}
 */
 
 /**
- * Сложная (6 баллов)
- *
- * Для заданного списка неотрицательных чисел и числа определить,
- * есть ли в списке пара чисел таких, что их сумма равна заданному числу.
- * Если да, верните их индексы в виде Pair<Int, Int>;
- * если нет, верните пару Pair(-1, -1).
- *
- * Индексы в результате должны следовать в порядке (меньший, больший).
- *
- * Постарайтесь сделать ваше решение как можно более эффективным,
- * используя то, что вы узнали в данном уроке.
- *
- * Например:
- *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
- *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
- */
-/**
- * Сложная (6 баллов)
- *
- * Для заданного списка неотрицательных чисел и числа определить,
- * есть ли в списке пара чисел таких, что их сумма равна заданному числу.
- * Если да, верните их индексы в виде Pair<Int, Int>;
- * если нет, верните пару Pair(-1, -1).
- *
- * Индексы в результате должны следовать в порядке (меньший, больший).
- *
- * Постарайтесь сделать ваше решение как можно более эффективным,
- * используя то, что вы узнали в данном уроке.
- *
- * Например:
- *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
- *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
- */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
-
-/**
  * Очень сложная (8 баллов)
  *
  * Входными данными является ассоциативный массив
@@ -410,30 +417,19 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
  *     450
  *   ) -> emptySet()
  */
-/**
- * Очень сложная (8 баллов)
- *
- * Входными данными является ассоциативный массив
- * "название сокровища"-"пара (вес сокровища, цена сокровища)"
- * и вместимость вашего рюкзака.
- * Необходимо вернуть множество сокровищ с максимальной суммарной стоимостью,
- * которые вы можете унести в рюкзаке.
- *
- * Перед решением этой задачи лучше прочитать статью Википедии "Динамическое программирование".
- *
- * Например:
- *   bagPacking(
- *     mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
- *     850
- *   ) -> setOf("Кубок")
- *   bagPacking(
- *     mapOf("Кубок" to (500 to 2000), "Слиток" to (1000 to 5000)),
- *     450
- *   ) -> emptySet()
- */
-fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
-
-fun main() {
-    val a = mapOf("ad" to 1)
-    println(a["da"])
+fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> {
+    val chest = mutableMapOf<Int, Pair<Set<String>, Int>>()
+    chest[0] = Pair(setOf(), 0)
+    for ((name, para) in treasures) {
+        for ((weight, comb) in chest) {
+            val newWeight = weight + para.first
+            if (newWeight <= capacity) {
+                if (((!chest.contains(newWeight) || (chest[newWeight]!!.second) < para.second + comb.second)) && !comb.first.contains(name)
+                ) {
+                    chest[newWeight] = Pair(comb.first + name, para.second + comb.second)
+                }
+            }
+        }
+    }
+    return chest.maxByOrNull { it.value.second }!!.value.first
 }

@@ -1,4 +1,4 @@
- @file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson6.task1
 
@@ -102,7 +102,11 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String =
+
+
+    if (phone.matches(Regex("""(\+? *[- \d]*(\([-\d ]+\)[-\d ]+)?)""")))
+        phone.filter { it !in " ()-" } else ""
 
 /**
  * Средняя (5 баллов)
@@ -114,7 +118,10 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int =
+    if (Regex("""([\d*\-%]+ ?)+""").matches(jumps)) {
+        jumps.split(" ").mapNotNull { it.toIntOrNull() }.maxOrNull() ?: -1
+    } else -1
 
 /**
  * Сложная (6 баллов)
