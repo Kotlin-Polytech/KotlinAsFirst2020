@@ -101,26 +101,25 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val printStream = PrintStream(File(outputName))
     val regex = Regex("""[жчшщ][ыяю]""", RegexOption.IGNORE_CASE)
-    File(inputName).forEachLine {
-        val line = regex.replace(it) { matchResult: MatchResult ->
-            val error = matchResult.value
-            val secondChar = when (error[1]) {
-                'Ы' -> 'И'
-                'ы' -> 'и'
-                'Я' -> 'А'
-                'я' -> 'а'
-                'Ю' -> 'У'
-                'ю' -> 'у'
-                else -> throw IllegalArgumentException()
+    PrintStream(File(outputName)).use { printStream ->
+        File(inputName).forEachLine {
+            val line = regex.replace(it) { matchResult: MatchResult ->
+                val error = matchResult.value
+                val secondChar = when (error[1]) {
+                    'Ы' -> 'И'
+                    'ы' -> 'и'
+                    'Я' -> 'А'
+                    'я' -> 'а'
+                    'Ю' -> 'У'
+                    'ю' -> 'у'
+                    else -> throw IllegalArgumentException()
+                }
+                error[0].toString() + secondChar.toString()
             }
-            error[0].toString() + secondChar.toString()
+            printStream.println(line)
         }
-        printStream.println(line)
     }
-    printStream.close()
-
 }
 
 /**
