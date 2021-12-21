@@ -245,17 +245,17 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
 fun roman(n: Int): String {
     val rom = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     val arabic = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-    var answer = ""
+    var answer = StringBuilder()
     var index = 0
     var number = n
     while (number > 0) {
         while (number >= arabic[index]) {
-            answer += rom[index]
+            answer.append(rom[index])
             number -= arabic[index]
         }
         index++
     }
-    return answer
+    return answer.toString()
 }
 
 /**
@@ -315,10 +315,9 @@ fun russian(n: Int): String {
 
 }
 
-fun printThousands(digit: Int): String {
-    return when (digit) {
+fun printThousands(digit: Int): String =
+    when (digit) {
         1 -> " тысяча"
         in 2..4 -> " тысячи"
         else -> " тысяч"
     }
-}
