@@ -188,9 +188,6 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
         } else res[key] = value
     }
     return res
-    /*val map = mutableMapOf<String, String>("ds" to "saad", "sds" to "rrd")
-    val m = map.filter { it.key.length > 2 } // оно почему-то не работает
-    return m */
 }
 
 
@@ -254,7 +251,10 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.all { it in chars }
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    chars.toSet()
+    return word.all { it in chars }
+}
 
 
 /**
@@ -291,20 +291,9 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
  * Например:
  *   hasAnagrams(listOf("тор", "свет", "рот")) -> true
  */
-fun hasAnagrams(words: List<String>): Boolean {
-    if (words.isEmpty()) return false
-    words.mapIndexed { index1, value ->
-        words.mapIndexed { index2, s ->
-            if (index1 != index2) {
-                if (value.length == s.length && canBuildFrom(value.map { it }.sorted(), s)) {
-                    return true
-                }
-            }
-        }
+fun hasAnagrams(words: List<String>): Boolean =
+    words.map { it.toCharArray().sorted().toString() }.sorted().zipWithNext().any { it.first == it.second }
 
-    }
-    return false
-}
 
 /**
  * Сложная (5 баллов)
@@ -339,20 +328,11 @@ fun hasAnagrams(words: List<String>): Boolean {
  *          "EvilGnome" to setOf(),
  *          "GoodGnome" to setOf()
  *        )
+
+
+
  */
-fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()/*{
-    val res =
-        mutableMapOf<String, MutableSet<String>>()
-    for ((key, value) in friends) {
-        res.put(key, mutableSetOf())
-        value.forEach { res[key]?.add(it) }
-        while (true) {
-            value.forEach { friends[it]?.forEach { res[key]?.add(it) } }
-            break
-        }
-    }
-    return res
-}*/
+fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<String>> = TODO()
 
 /**
  * Сложная (6 баллов)
@@ -383,19 +363,6 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
 }
 
 
-
-
-/*{
-    var a = Pair(-1, -1)
-    list.mapIndexed { index1, it ->
-        list.mapIndexed { index2, i ->
-            if (it + i == number && index2 != index1) a = Pair(index2, index1)
-        }
-    }
-    return a
-}
-*/
-
 /**
  * Очень сложная (8 баллов)
  *
@@ -424,7 +391,8 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         for ((weight, comb) in chest) {
             val newWeight = weight + para.first
             if (newWeight <= capacity) {
-                if (((!chest.contains(newWeight) || (chest[newWeight]!!.second) < para.second + comb.second)) && !comb.first.contains(name)
+                if (((!chest.contains(newWeight) || (chest[newWeight]!!.second) < para.second + comb.second)) && !comb.first.contains(
+                        name)
                 ) {
                     chest[newWeight] = Pair(comb.first + name, para.second + comb.second)
                 }
@@ -432,4 +400,10 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
         }
     }
     return chest.maxByOrNull { it.value.second }!!.value.first
+}
+
+fun main() {
+    val words = listOf<String>("adafs", "bhjfgdh", "adbfbfs")
+    val a = 0
+    println(words.let { it.toList().sorted() })
 }

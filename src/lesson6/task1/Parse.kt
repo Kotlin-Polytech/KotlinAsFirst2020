@@ -74,7 +74,13 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val a = str.split(" ")
+    if (str.matches(Regex("""\d\d [а-яё]+ \d{4}"""))){
+        TODO()
+    }
+TODO()
+}
 
 /**
  * Средняя (4 балла)
@@ -103,8 +109,6 @@ fun dateDigitToStr(digital: String): String = TODO()
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
 fun flattenPhoneNumber(phone: String): String =
-
-
     if (phone.matches(Regex("""(\+? *[- \d]*(\([-\d ]+\)[-\d ]+)?)""")))
         phone.filter { it !in " ()-" } else ""
 
