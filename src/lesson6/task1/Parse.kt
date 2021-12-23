@@ -76,10 +76,10 @@ fun main() {
  */
 fun dateStrToDigit(str: String): String {
     val a = str.split(" ")
-    if (str.matches(Regex("""\d\d [а-яё]+ \d{4}"""))){
+    if (str.matches(Regex("""\d\d [а-яё]+ \d{4}"""))) {
         TODO()
     }
-TODO()
+    TODO()
 }
 
 /**
@@ -138,7 +138,15 @@ fun bestLongJump(jumps: String): Int =
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    var res = -1
+    if (Regex("""([\d*+\-%] ?)+""").matches(jumps)) {
+        jumps.split(" ").zipWithNext().forEach {
+            if (it.first.toIntOrNull() != null && it.second == "+" && res < it.first.toInt()) res = it.first.toInt()
+        }
+    }
+    return res
+}
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +157,35 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var counter = 0
+    var first = 0
+    var res = 0
+    val f = expression.split(" ")
+    if (!f.first().matches(Regex("""\d+""")) || !f.last().matches(Regex("""\d+"""))) throw IllegalArgumentException()
+    f.zipWithNext().forEach {
+        counter++
+        when (counter) {
+            1 -> {
+                first = ((it.first.toIntOrNull() ?: throw IllegalArgumentException()))
+            }
+            2 -> res += when (it.first) {
+                "+" -> (first + (it.second.toIntOrNull() ?: throw IllegalArgumentException()))
+                "-" -> (first - (it.second.toIntOrNull() ?: throw IllegalArgumentException()))
+                else -> throw IllegalArgumentException()
+            }
+        }
+        when (counter % 2 == 0 && counter > 2) {
+            true -> res += when (it.first) {
+                "+" -> (it.second.toIntOrNull() ?: throw IllegalArgumentException())
+                "-" -> -(it.second.toIntOrNull() ?: throw IllegalArgumentException())
+                else -> throw IllegalArgumentException()
+            }
+        }
+
+    }
+    return res
+}
 
 /**
  * Сложная (6 баллов)

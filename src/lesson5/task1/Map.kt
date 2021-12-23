@@ -251,10 +251,7 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean {
-    chars.toSet()
-    return word.all { it in chars }
-}
+fun canBuildFrom(chars: List<Char>, word: String): Boolean = word.all { it in chars.toSet() }
 
 
 /**
@@ -402,8 +399,26 @@ fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<Strin
     return chest.maxByOrNull { it.value.second }!!.value.first
 }
 
+/**
+ * Сложная (6 баллов)
+ *
+ * Для заданного списка неотрицательных чисел и числа определить,
+ * есть ли в списке пара чисел таких, что их сумма равна заданному числу.
+ * Если да, верните их индексы в виде Pair<Int, Int>;
+ * если нет, верните пару Pair(-1, -1).
+ *
+ * Индексы в результате должны следовать в порядке (меньший, больший).
+ *
+ * Постарайтесь сделать ваше решение как можно более эффективным,
+ * используя то, что вы узнали в данном уроке.
+ *
+ * Например:
+ *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
+ *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
+ */
 fun main() {
-    val words = listOf<String>("adafs", "bhjfgdh", "adbfbfs")
-    val a = 0
-    println(words.let { it.toList().sorted() })
+    val list = listOf(1, 2, 3)
+    val s = 4
+    val map = mutableMapOf<Int, Int>()
+
 }
