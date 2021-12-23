@@ -159,23 +159,12 @@ fun bestHighJump(jumps: String): Int {
  */
 fun plusMinus(expression: String): Int {
     var counter = 0
-    var first = 0
-    var res = 0
     val f = expression.split(" ")
     if (!f.first().matches(Regex("""\d+""")) || !f.last().matches(Regex("""\d+"""))) throw IllegalArgumentException()
+    var res = f.first().toInt()
     f.zipWithNext().forEach {
         counter++
-        when (counter) {
-            1 -> {
-                first = ((it.first.toIntOrNull() ?: throw IllegalArgumentException()))
-            }
-            2 -> res += when (it.first) {
-                "+" -> (first + (it.second.toIntOrNull() ?: throw IllegalArgumentException()))
-                "-" -> (first - (it.second.toIntOrNull() ?: throw IllegalArgumentException()))
-                else -> throw IllegalArgumentException()
-            }
-        }
-        when (counter % 2 == 0 && counter > 2) {
+        when (counter % 2 == 0) {
             true -> res += when (it.first) {
                 "+" -> (it.second.toIntOrNull() ?: throw IllegalArgumentException())
                 "-" -> -(it.second.toIntOrNull() ?: throw IllegalArgumentException())
