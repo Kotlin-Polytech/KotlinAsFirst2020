@@ -268,8 +268,7 @@ fun top20Words(inputName: String): Map<String, Int> {
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     PrintStream(outputName).use { printstream ->
-        File(inputName).readLines().forEach() { it ->
-
+        File(inputName).readLines().forEach() {
             var stringBuilder = StringBuilder()
             it.lowercase(Locale.getDefault()).toCharArray().forEach() { letter ->
 
@@ -286,8 +285,12 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
             var string = stringBuilder.toString()
             if (it.any() { z -> z.isUpperCase() }) {
                 string = string.lowercase(Locale.getDefault())
-                string = string.substring(0, 1).uppercase(Locale.getDefault()) + string.substring(1)
-            } else string = string.lowercase(Locale.getDefault())
+                string = if (string.length == 1) string.uppercase(Locale.getDefault())
+                else string.substring(0, 1).uppercase(Locale.getDefault()) + string.substring(1)
+            } else {
+                string = string.lowercase(Locale.getDefault())
+
+            }
             printstream.println(string)
 
         }
@@ -345,7 +348,7 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
         val res = StringBuilder()
         for (it in list.map { it.substring(0, 1).uppercase(Locale.getDefault()) + it.substring(1) }) {
             if (list.size == 1) {
-                res.append(it)
+                res.append(it.uppercase(Locale.getDefault()))
                 break
             } else if (counter <= list.size) {
                 if (counter == 1) {
@@ -577,7 +580,7 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
 }
 
 fun main() {
-    var a = "skdfsdlkgjslfk".split(" ")
+    var a = "s"
 
-    println(a.zipWithNext())
+//    println(a.substring(0, 1).uppercase(Locale.getDefault()) + string.substring(1))
 }
