@@ -295,7 +295,7 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
                                 counter++
                             } else stringBuilder.append(t.lowercaseChar())
                         }
-                    } else stringBuilder.append(dictionary[letter.uppercaseChar()])
+                    } else stringBuilder.append(dictionary[letter.uppercaseChar()]!!.lowercase(Locale.getDefault()))
                 } else {
                     stringBuilder.append(letter.toString())
                 }
