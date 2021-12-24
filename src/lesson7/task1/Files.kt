@@ -289,7 +289,7 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
                     } else stringBuilder.append(dictionary[letter.lowercaseChar()]!!.lowercase(Locale.getDefault()))
                 } else if (letter.uppercaseChar() in dictionary) {
                     if (letter.isUpperCase()) {
-                        for (t in dictionary[letter.lowercaseChar()]!!) {
+                        for (t in dictionary[letter.uppercaseChar()]!!) {
                             if (counter == 0) {
                                 stringBuilder.append(t.uppercaseChar())
                                 counter++
