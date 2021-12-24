@@ -4,6 +4,7 @@ package lesson7.task1
 
 import java.io.File
 import java.io.PrintStream
+import java.util.*
 import kotlin.math.max
 
 // Урок 7: работа с файлами
@@ -11,12 +12,6 @@ import kotlin.math.max
 // Максимальное количество баллов = 55
 // Рекомендуемое количество баллов = 20
 // Вместе с предыдущими уроками (пять лучших, 3-7) = 55/103
-fun main() {
-    val printStream = PrintStream(File("input/align_in1.txt"))
-    printStream.println(1234557)
-    printStream.close()
-
-}
 
 /**
  * Пример
@@ -208,7 +203,33 @@ fun alignFileByWidth(inputName: String, outputName: String) {
  * Ключи в ассоциативном массиве должны быть в нижнем регистре.
  *
  */
-fun top20Words(inputName: String): Map<String, Int> = TODO()
+fun top20Words(inputName: String): Map<String, Int> {
+    val res = mutableMapOf<String, Int>()
+    val a = File(inputName).readText().split(Regex("""[^a-zA-zа-яeёА-яЕЁ]+""")).toMutableList()
+    a.remove("")
+    if (a.isEmpty()) return res
+    a.forEach {
+        val string = it.lowercase(Locale.getDefault())
+        if (string !in res && string.matches(Regex("""[a-zа-яeё]+"""))) res[string] = 1
+        else if (string.matches(Regex("""[a-zа-яеё]+"""))) res[string] = res[string]!! + 1
+
+    }
+
+    val revers = mutableMapOf<Int, MutableList<String>>()
+    res.forEach {
+        if (!revers.contains(it.value)) revers[it.value] = mutableListOf<String>(it.key)
+        else revers[it.value]!!.add(it.key)
+    }
+    res.clear()
+    revers.toSortedMap(Comparator.reverseOrder()).forEach() {
+        if (res.size < 20) {
+            it.value.forEach() { word -> res[word] = it.key }
+
+        }
+    }
+
+    return res
+}
 
 /**
  * Средняя (14 баллов)
@@ -246,8 +267,34 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    PrintStream(outputName).use { printstream ->
+        File(inputName).readLines().forEach() { it ->
+
+            var stringBuilder = StringBuilder()
+            it.lowercase(Locale.getDefault()).toCharArray().forEach() { letter ->
+
+                if (letter.lowercaseChar() in dictionary)
+                    stringBuilder.append(dictionary[letter.lowercaseChar()]!!)
+                else if (letter.uppercaseChar() in dictionary)
+                    stringBuilder.append(dictionary[letter.uppercaseChar()]!!)
+                else {
+                    stringBuilder.append(letter.toString())
+                }
+            }
+
+
+            var string = stringBuilder.toString()
+            if (it.any() { z -> z.isUpperCase() }) {
+                string = string.lowercase(Locale.getDefault())
+                string = string.substring(0, 1).uppercase(Locale.getDefault()) + string.substring(1)
+            } else string = string.lowercase(Locale.getDefault())
+            printstream.println(string)
+
+        }
+
+    }
 }
+
 
 /**
  * Средняя (12 баллов)
@@ -274,8 +321,44 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    PrintStream(outputName).use { printStream ->
+        val list = mutableListOf<String>() // слова одинаковой длинны
+        var long = 0 // текущая длинна
+        for (i in File(inputName).readLines()) {
+
+            val word = i.lowercase(Locale.getDefault())
+            if (word.toCharArray().size == word.toSet().size) {
+                if (long > word.length) {
+                    continue
+                } else if (long < word.length) {
+                    list.clear()
+                    list.add(word)
+                    long = word.length
+                } else if (long == word.length) {
+                    list.add(word)
+
+                }
+            } else continue
+        }
+
+        var counter = 1
+        val res = StringBuilder()
+        for (it in list.map { it.substring(0, 1).uppercase(Locale.getDefault()) + it.substring(1) }) {
+            if (list.size == 1) {
+                res.append(it)
+                break
+            } else if (counter <= list.size) {
+                if (counter == 1) {
+                    res.append(it)
+                } else res.append(", ").append(it)
+                counter++
+            }
+
+        }
+        printStream.println(res.toString())
+    }
 }
+
 
 /**
  * Сложная (22 балла)
@@ -493,3 +576,8 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
 
+fun main() {
+    var a = "skdfsdlkgjslfk".split(" ")
+
+    println(a.zipWithNext())
+}
