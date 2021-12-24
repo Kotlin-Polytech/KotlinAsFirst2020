@@ -348,7 +348,7 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
         val res = StringBuilder()
         for (it in list) {
             if (list.size == 1) {
-                res.append(it.uppercase(Locale.getDefault()))
+                res.append(it)
                 break
             } else if (counter <= list.size) {
                 if (counter == 1) {
