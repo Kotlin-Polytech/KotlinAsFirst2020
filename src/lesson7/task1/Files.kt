@@ -212,9 +212,7 @@ fun top20Words(inputName: String): Map<String, Int> {
         val string = it.lowercase(Locale.getDefault())
         if (string !in res && string.matches(Regex("""[a-zа-яeё]+"""))) res[string] = 1
         else if (string.matches(Regex("""[a-zа-яеё]+"""))) res[string] = res[string]!! + 1
-
     }
-
     val revers = mutableMapOf<Int, MutableList<String>>()
     res.forEach {
         if (!revers.contains(it.value)) revers[it.value] = mutableListOf<String>(it.key)
@@ -224,10 +222,8 @@ fun top20Words(inputName: String): Map<String, Int> {
     revers.toSortedMap(Comparator.reverseOrder()).forEach() {
         if (res.size < 20) {
             it.value.forEach() { word -> res[word] = it.key }
-
         }
     }
-
     return res
 }
 
@@ -268,16 +264,10 @@ fun top20Words(inputName: String): Map<String, Int> {
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     PrintStream(outputName).use { printstream ->
-        File(inputName).readLines().forEach() { it ->
+        File(inputName).readLines().forEach() {
             val stringBuilder = StringBuilder()
-//            val listup = mutableListOf<Int>()
-//            it.forEach() { char ->
-//                if (char.isUpperCase()) listup.add(1)
-//                else listup.add(0)
-//            }
             it.toCharArray().forEach() { letter ->
                 var counter = 0
-
                 if (letter.lowercaseChar() in dictionary) {
                     if (letter.isUpperCase()) {
                         for (i in dictionary[letter.lowercaseChar()]!!) {
@@ -301,23 +291,8 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
                 }
             }
             printstream.println(stringBuilder)
-//            val string = StringBuilder()
-//            (stringBuilder.toList().zip(listup)).forEach {
-//                if (it.second == 1) string.append(it.first.uppercaseChar())
-//                else string.append(it.first.lowercase())
-//            }
-//            if (it.any() { z -> z.isUpperCase() }) {
-//                string = string.lowercase(Locale.getDefault())
-//                string = if (string.length == 1) string.uppercase(Locale.getDefault())
-//                else string.substring(0, 1).uppercase(Locale.getDefault()) + string.substring(1)
-//            } else {
-//                string = string.lowercase(Locale.getDefault())
-
         }
-
-
     }
-
 }
 
 
@@ -347,10 +322,9 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     PrintStream(outputName).use { printStream ->
-        val list = mutableListOf<String>() // слова одинаковой длинны
-        var long = 0 // текущая длинна
+        val list = mutableListOf<String>()
+        var long = 0
         for (i in File(inputName).readLines()) {
-
             val word = i.lowercase(Locale.getDefault())
             if (word.toCharArray().size == word.toSet().size) {
                 if (long > word.length) {
@@ -365,7 +339,6 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
                 }
             } else continue
         }
-
         var counter = 1
         val res = StringBuilder()
         for (it in list) {
@@ -378,7 +351,6 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
                 } else res.append(", ").append(it)
                 counter++
             }
-
         }
         printStream.println(res.toString())
     }
