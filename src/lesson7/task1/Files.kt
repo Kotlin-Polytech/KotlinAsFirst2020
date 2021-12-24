@@ -269,7 +269,7 @@ fun top20Words(inputName: String): Map<String, Int> {
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     PrintStream(outputName).use { printstream ->
         File(inputName).readLines().forEach() {
-            var stringBuilder = StringBuilder()
+            val stringBuilder = StringBuilder()
             it.lowercase(Locale.getDefault()).toCharArray().forEach() { letter ->
 
                 if (letter.lowercaseChar() in dictionary)
@@ -335,10 +335,10 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
                     continue
                 } else if (long < word.length) {
                     list.clear()
-                    list.add(word)
+                    list.add(i)
                     long = word.length
                 } else if (long == word.length) {
-                    list.add(word)
+                    list.add(i)
 
                 }
             } else continue
@@ -346,7 +346,7 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
 
         var counter = 1
         val res = StringBuilder()
-        for (it in list.map { it.substring(0, 1).uppercase(Locale.getDefault()) + it.substring(1) }) {
+        for (it in list) {
             if (list.size == 1) {
                 res.append(it.uppercase(Locale.getDefault()))
                 break
@@ -579,8 +579,13 @@ fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
     TODO()
 }
 
-fun main() {
-    var a = "s"
-
-//    println(a.substring(0, 1).uppercase(Locale.getDefault()) + string.substring(1))
-}
+//fun main() {
+//    val it = "aO"
+//    var string = "aO"
+//    if (it.any() { z -> z.isUpperCase() }) {
+//        string = string.lowercase(Locale.getDefault())
+//        string = if (string.length == 1) string.uppercase(Locale.getDefault())
+//        else string.substring(0, 1).uppercase(Locale.getDefault()) + string.substring(1)
+//    }
+//    println(string)
+//}
