@@ -180,7 +180,7 @@ fun centerFile(inputName: String, outputName: String) {
     var maxLength = 0
     for (line in File(inputName).readLines()){
         txt.add(line.trim())
-        if (line.length>maxLength) maxLength = line.length
+        if (line.trim().length>maxLength) maxLength = line.trim().length
     }
     for(x in txt){
         writer.write(" ".repeat(((maxLength - x.length)/2)) + x)
