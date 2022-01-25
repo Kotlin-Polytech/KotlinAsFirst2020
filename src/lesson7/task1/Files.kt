@@ -95,7 +95,7 @@ fun sibilants(inputName: String, outputName: String) {
     val sib = mapOf(
         "Щя" to "Ща",
         "Щы" to "Щи",
-        "Щю" to "Щю",
+        "Щю" to "Щу",
         "Шя" to "Ша",
         "Шы" to "Ши",
         "Шю" to "Шу",
