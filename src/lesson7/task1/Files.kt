@@ -92,7 +92,69 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val sib = mapOf(
+        "Щя" to "Ща",
+        "Щы" to "Щи",
+        "Щю" to "Щю",
+        "Шя" to "Ша",
+        "Шы" to "Ши",
+        "Шю" to "Шу",
+        "Жя" to "Жа",
+        "Жы" to "Жи",
+        "Жю" to "Жу",
+        "Чя" to "Ча",
+        "Чы" to "Чи",
+        "Чю" to "Чу",
+        "щя" to "ща",
+        "щы" to "щи",
+        "щю" to "щу",
+        "шя" to "ша",
+        "шы" to "ши",
+        "шю" to "шу",
+        "жя" to "жа",
+        "жы" to "жи",
+        "жю" to "жу",
+        "чя" to "ча",
+        "чы" to "чи",
+        "чю" to "чу",
+        "ЩЯ" to "ЩА",
+        "ЩЫ" to "ЩИ",
+        "ЩЮ" to "ЩУ",
+        "ШЯ" to "ША",
+        "ШЫ" to "ШИ",
+        "ШЮ" to "ШУ",
+        "ЖЯ" to "ЖА",
+        "ЖЫ" to "ЖИ",
+        "ЖЮ" to "ЖУ",
+        "ЧЯ" to "ЧА",
+        "ЧЫ" to "ЧИ",
+        "ЧЮ" to "ЧУ",
+        "щЯ" to "щА",
+        "щЫ" to "щИ",
+        "щЮ" to "щУ",
+        "шЯ" to "шА",
+        "шЫ" to "шИ",
+        "шЮ" to "шУ",
+        "жЯ" to "жА",
+        "жЫ" to "жИ",
+        "жЮ" to "жУ",
+        "чЯ" to "чА",
+        "чЫ" to "чИ",
+        "чЮ" to "чУ"
+
+    )
+    val writer = File(outputName).bufferedWriter()
+    var str = ""
+    for (line in File(inputName).readLines()){
+        str = line
+            //for (i in 0..(str.length-1))
+                //if("ЖЧШЩжчшщ".contains(str[i]) && "ЫЯЮыяю".contains(str[i+1])) str.replace(str.substring(i, i+2), sib.getValue(str.substring(i, i+2)).toString())
+        for (i in sib) if(str.contains(i.key))str = str.replace(i.key, i.value)
+        writer.write(str)
+        writer.newLine()
+
+    }
+writer.close()
 }
 
 /**
@@ -113,7 +175,18 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    var txt = mutableListOf<String>()
+    var maxLength = 0
+    for (line in File(inputName).readLines()){
+        txt.add(line.trim())
+        if (line.length>maxLength) maxLength = line.length
+    }
+    for(x in txt){
+        writer.write(" ".repeat(((maxLength - x.length)/2)) + x)
+        writer.newLine()
+    }
+    writer.close()
 }
 
 /**
