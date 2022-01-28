@@ -211,28 +211,10 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
 fun extractRepeats(list: List<String>): Map<String, Int> {
-    var a = mutableListOf<Pair<String, Int>>()
-    for (i in list.indices) {
-        var c = false
-        for (j in a.indices) {
-
-            if (a[j].first == list[i]) {
-                a[j] = a[j].copy(second = a[j].second + 1)
-                c = true
-            }
-
-        }
-        if (c == false) a.add(Pair(list[i], 1))
-    }
-    var n = 0
-    for (i in a.indices) {
-        if (a[i - n].second == 1) {
-            a.remove(a[i - n])
-            n += 1
-        }
-
-    }
-    return a.toMap()
+    val gr = list.groupBy { it }
+    val answer = mutableMapOf<String, Int>()
+    for (x in gr) if (x.value.size > 1) answer.put(x.key, x.value.size)
+    return answer
 }
 
 /**

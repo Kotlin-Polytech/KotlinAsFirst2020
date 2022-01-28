@@ -242,66 +242,17 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
 fun roman(n: Int): String {
-    //val dec = listOf(1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000)
-    //val rom = listOf("I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M")
-    var answer = ""
+    var dec = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    var rom = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    var answer = StringBuilder()
     var a = n
-
-    while (a >= 1000) {
-        a -= 1000
-        answer += "M"
+    for (i in dec.indices) {
+        while (a >= dec[i]) {
+            answer.append(rom[i])
+            a -= dec[i]
+        }
     }
-    while (a >= 900) {
-        a -= 900
-        answer += "CM"
-    }
-    while (a >= 500) {
-        a -= 500
-        answer += "D"
-    }
-    while (a >= 400) {
-        a -= 400
-        answer += "CD"
-    }
-    while (a >= 100) {
-        a -= 100
-        answer += "C"
-    }
-    while (a >= 90) {
-        a -= 90
-        answer += "XC"
-    }
-    while (a >= 50) {
-        a -= 50
-        answer += "L"
-    }
-    while (a >= 40) {
-        a -= 40
-        answer += "XL"
-    }
-    while (a >= 10) {
-        a -= 10
-        answer += "X"
-    }
-    while (a >= 9) {
-        a -= 9
-        answer += "IX"
-    }
-    while (a >= 5) {
-        a -= 5
-        answer += "V"
-    }
-    while (a >= 4) {
-        a -= 4
-        answer += "IV"
-    }
-    while (a >= 1) {
-        a -= 1
-        answer += "I"
-    }
-
-    return answer
-
+    return answer.toString()
 }
 
 /**
