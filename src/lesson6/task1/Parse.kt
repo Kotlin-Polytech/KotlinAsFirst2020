@@ -146,6 +146,7 @@ fun plusMinus(expression: String): Int {
     val operations = "+-"
     var sign = '+'
     for(i in expression.split("\\s+".toRegex())) a.add(i)
+    if (a.size==0) throw IllegalArgumentException("")
     for(i in 0..a.size-1){
         if((i%2)==0) {
             if(ints.contains(a[i][0]))  answer+= (sign+a[i]).toInt()
