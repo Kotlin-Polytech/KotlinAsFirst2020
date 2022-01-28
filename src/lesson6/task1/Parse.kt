@@ -139,21 +139,20 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression.trim() == "") throw IllegalArgumentException("")
+    if (expression == "") throw IllegalArgumentException("")
     var a = mutableListOf<String>()
     var answer = 0
     val ints = "0123456789"
     val operations = "+-"
     var sign = '+'
-    for(i in expression.split("\\s+".toRegex())) a.add(i)
-    if (a.size==0) throw IllegalArgumentException("")
-    for(i in 0..a.size-1){
-        if((i%2)==0) {
-            if(ints.contains(a[i][0]))  answer+= (sign+a[i]).toInt()
-            if(!ints.contains(a[i][0])) throw IllegalArgumentException("")
+    for (i in expression.split("\\s+".toRegex())) a.add(i)
+    for (i in 0..a.size - 1) {
+        if ((i % 2) == 0) {
+            if (a[i].isNotEmpty() && ints.contains(a[i][0])) answer += (sign + a[i]).toInt()
+            else throw IllegalArgumentException("")
         }
-        if((i%2)==1) {
-            if(operations.contains(a[i]))  sign = a[i][0]
+        if ((i % 2) == 1) {
+            if (a[i].isNotEmpty() && operations.contains(a[i])) sign = a[i][0]
             else throw IllegalArgumentException("")
         }
     }
@@ -171,12 +170,12 @@ fun plusMinus(expression: String): Int {
  */
 fun firstDuplicateIndex(str: String): Int {
     var a = mutableListOf<String>()
-    for(i in str.split("\\s+".toRegex())) a.add(i.lowercase())
+    for (i in str.split("\\s+".toRegex())) a.add(i.lowercase())
     var currentStr = a[0]
-    for(i in 1..a.size-1){
-        if(a[i]==currentStr){
+    for (i in 1..a.size - 1) {
+        if (a[i] == currentStr) {
             var answer = 0
-            for(j in 0..i-2) answer+=a[j].length +1
+            for (j in 0..i - 2) answer += a[j].length + 1
             return answer
         }
         currentStr = a[i]
