@@ -139,7 +139,7 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (expression == "") throw IllegalArgumentException("")
+    if (expression.trim() == "") throw IllegalArgumentException("")
     var a = mutableListOf<String>()
     var answer = 0
     val ints = "0123456789"
