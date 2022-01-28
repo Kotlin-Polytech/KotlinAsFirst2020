@@ -138,7 +138,25 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var a = mutableListOf<String>()
+    var answer = 0
+    val ints = "0123456789"
+    val operations = "+-"
+    var sign = '+'
+    for(i in expression.split("\\s+".toRegex())) a.add(i)
+    for(i in 0..a.size-1){
+        if((i%2)==0) {
+            if(ints.contains(a[i][0]))  answer+= (sign+a[i]).toInt()
+            if(!ints.contains(a[i][0])) throw IllegalArgumentException("")
+        }
+        if((i%2)==1) {
+            if(operations.contains(a[i]))  sign = a[i][0]
+            else throw IllegalArgumentException("")
+        }
+    }
+    return answer
+}
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +167,21 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    var a = mutableListOf<String>()
+    for(i in str.split("\\s+".toRegex())) a.add(i.lowercase())
+    var currentStr = a[0]
+    for(i in 1..a.size-1){
+        if(a[i]==currentStr){
+            var answer = 0
+            for(j in 0..i-2) answer+=a[j].length +1
+            return answer
+        }
+        currentStr = a[i]
+    }
+
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
