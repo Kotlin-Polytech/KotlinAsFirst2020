@@ -101,7 +101,7 @@ fun sibilants(inputName: String, outputName: String) {
         'Ы' to 'И'
     )
     val writer = File(outputName).bufferedWriter()
-    var s = mutableListOf<String>()
+    val s = mutableListOf<String>()
     for (line in File(inputName).readLines()) s.add(line)
     for (line in s) {
         var lastChr = line[0]
@@ -134,7 +134,7 @@ fun sibilants(inputName: String, outputName: String) {
  */
 fun centerFile(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
-    var txt = mutableListOf<String>()
+    val txt = mutableListOf<String>()
     var maxLength = 0
     for (line in File(inputName).readLines()) {
         txt.add(line.trim())

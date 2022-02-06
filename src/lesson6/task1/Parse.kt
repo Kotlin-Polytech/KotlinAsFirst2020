@@ -140,20 +140,19 @@ fun bestHighJump(jumps: String): Int = TODO()
  */
 fun plusMinus(expression: String): Int {
     if (expression == "") throw IllegalArgumentException("")
-    var a = mutableListOf<String>()
     var answer = 0
-    val ints = "0123456789"
-    val operations = "+-"
     var sign = '+'
-    for (i in expression.split("\\s+".toRegex())) a.add(i)
-    for (i in 0..a.size - 1) {
-        if ((i % 2) == 0) {
-            if (a[i].isNotEmpty() && ints.contains(a[i][0])) answer += (sign + a[i]).toInt()
+    var num = true
+    for (a in expression.split("\\s+".toRegex())) {
+        if (a.isEmpty()) throw IllegalArgumentException("")
+        if (num) {
+            if (a.matches("^\\d+\$".toRegex())) answer += (sign + a).toInt()
             else throw IllegalArgumentException("")
-        }
-        if ((i % 2) == 1) {
-            if (a[i].isNotEmpty() && operations.contains(a[i])) sign = a[i][0]
+            num = false
+        } else if (!num) {
+            if (a.matches("^[+-]".toRegex())) sign = a[0]
             else throw IllegalArgumentException("")
+            num = true
         }
     }
     return answer
@@ -169,7 +168,7 @@ fun plusMinus(expression: String): Int {
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int {
-    var a = mutableListOf<String>()
+    val a = mutableListOf<String>()
     for (i in str.split("\\s+".toRegex())) a.add(i.lowercase())
     var currentStr = a[0]
     for (i in 1..a.size - 1) {
