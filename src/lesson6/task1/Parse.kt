@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import java.io.File
+import java.io.IOException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -157,6 +160,92 @@ fun plusMinus(expression: String): Int {
     }
     return answer
 }
+
+fun todo(todos: List<String>): List<String> {
+    val a = todos.groupBy { it.split(" - ")[0] }
+    for (i in todos) if (i.split(" - ").size != 2) throw IllegalArgumentException()
+    val answer = mutableListOf<String>()
+    val days = listOf("понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье")
+    for (i in a.keys) if (!days.contains(i)) throw IllegalArgumentException()
+    for (day in days)
+        if (a.containsKey(day)) answer.add(day + " - " + a.getOrDefault(day, emptyList()).size.toString())
+    return answer
+}
+
+fun todoList(inputName: String, limit: Int): String {
+    val tasks = mutableListOf<String>()
+    val importance = mutableListOf<Int>()
+    val time = mutableListOf<Int>()
+    val reader = File(inputName)
+    for (line in reader.readLines()) {
+        tasks.add(line.split(" -- ")[0])
+        importance.add(line.split(" -- ")[1].split(",")[0].split(" ")[1].toInt())
+        time.add(line.split(" -- ")[1].split(", ")[1].split(" ")[0].toInt())
+    }
+    var max = 0;
+    var i1 = 0
+    var i2 = 0
+    for (i in 0..(importance.size - 1)) {
+
+        for (j in i..importance.size - 1) {
+            if ((importance[i] + importance[j]) > max)
+                if ((time[i] + time[j]) <= limit)
+                    if (i != j) {
+                        i1 = i
+                        i2 = j
+                        max = importance[i] + importance[j]
+                    }
+        }
+    }
+    if (max == 0) throw IllegalArgumentException()
+
+    return tasks[i1] + " и " + tasks[i2] + ", сумма важности " + max.toString() + ", сумма времени " +
+            (time[i1] + time[i2]).toString() + " мин."
+}
+
+fun football(inputName: String): String {
+    val reader = File(inputName)
+    val teams = mutableListOf<String>()
+    val results = mutableListOf<String>()
+    val score = mutableListOf<Int>()
+
+    for (line in reader.readLines()) {
+        results.add(line.split(" - ")[0].replace(" ", ""))
+        teams.add(line.split(" - ")[1])
+        score.add(0)
+    }
+
+    for (i in 0..results.size - 1)
+        for (j in 0..results[i].length - 1) {
+
+            if (results[i][j] == 'W')
+                if (results[j][i] == 'L') score[i] += 3
+                else throw IllegalStateException()
+
+            if (results[i][j] == 'D')
+                if (results[j][i] == 'D') score[i] += 1
+                else throw IllegalStateException()
+        }
+    return teams[score.indexOf(score.maxOrNull())]
+}
+
+fun racing(inputName: String): String {
+    val teams = mutableListOf<String>()
+    val score = mutableListOf<Int>()
+    if (!File(inputName).exists()) throw IOException()
+    val file = File(inputName).readLines()
+    for (line in file) {
+        if (line.split(" ").size > 2) {
+            if (!teams.contains(line.split(", ")[1])) {
+                teams.add(line.split(", ")[1])
+                score.add(line.split(", ")[2].toInt())
+
+            } else score[teams.indexOf(line.split(", ")[1])] += line.split(", ")[2].toInt()
+        }
+    }
+    return teams[score.indexOf(score.maxOrNull())] + ", " + score.maxOrNull().toString()
+}
+
 
 /**
  * Сложная (6 баллов)

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import java.io.IOException
 
 class Tests {
     @Test
@@ -89,6 +90,7 @@ class Tests {
     @Test
     @Tag("6")
     fun plusMinus() {
+        assertThrows(IllegalArgumentException::class.java) { plusMinus(" a") }
         assertEquals(0, plusMinus("0"))
         assertEquals(4, plusMinus("2 + 2"))
         assertEquals(6, plusMinus("2 + 31 - 40 + 13"))
@@ -98,6 +100,70 @@ class Tests {
         assertThrows(IllegalArgumentException::class.java) { plusMinus("4 - -2") }
         assertThrows(IllegalArgumentException::class.java) { plusMinus("44 - - 12") }
         assertThrows(IllegalArgumentException::class.java) { plusMinus("4 - + 12") }
+
+    }
+
+    @Test
+    @Tag("6")
+    fun todo() {
+        assertEquals(
+            listOf("вторник - 1", "пятница - 2", "суббота - 1"),
+            todo(listOf("вторник - лекции;", "пятница - друзья;", "суббота - кинотеатр;", "пятница - уборка;"))
+        )
+        assertEquals(
+            listOf("вторник - 2", "суббота - 3"),
+            todo(
+                listOf(
+                    "вторник - лекции;",
+                    "суббота - кинотеатр;",
+                    "вторник - лекции;",
+                    "суббота - кинотеатр;",
+                    "суббота - кинотеатр;"
+                )
+            )
+        )
+        assertThrows(IllegalArgumentException::class.java) {
+            todo(
+                listOf(
+                    "вторник - лекции;",
+                    "пятница -j j друзья;",
+                    "субfgбота - кинотеатр;",
+                    "пятница - уборка;"
+                )
+            )
+        }
+
+    }
+
+
+    @Test
+    @Tag("1")
+    fun todoList() {
+        assertEquals(
+            "задание1 и задание3, сумма важности 5, сумма времени 75 мин.",
+            todoList("input/govno.txt", 90)
+        )
+        assertThrows(IllegalArgumentException::class.java) { todoList("input/govno2.txt", 90) }
+    }
+
+    @Test
+    @Tag("1")
+    fun football() {
+        assertEquals(
+            "1",
+            football("input/football.txt")
+        )
+        assertThrows(IllegalStateException::class.java) { lesson6.task1.football("input/football2.txt") }
+    }
+
+    @Test
+    @Tag("1")
+    fun racing() {
+        assertEquals(
+            "teamMM, 18",
+            racing("input/racing.txt")
+        )
+        assertThrows(IOException::class.java) { racing("input/racing2.txt") }
     }
 
     @Test
