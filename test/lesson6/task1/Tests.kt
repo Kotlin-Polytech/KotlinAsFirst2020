@@ -4,9 +4,18 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import java.io.File
 import java.io.IOException
 
+
 class Tests {
+
+    private fun assertFileContent(name: String, expectedContent: String) {
+        val file = File(name)
+        val content = file.readLines().joinToString("\n")
+        assertEquals(expectedContent, content)
+    }
+
     @Test
     @Tag("Example")
     fun timeStrToSeconds() {
@@ -164,6 +173,32 @@ class Tests {
             racing("input/racing.txt")
         )
         assertThrows(IOException::class.java) { racing("input/racing2.txt") }
+    }
+
+    @Test
+    @Tag("1")
+    fun intersec() {
+        assertEquals(
+            mutableListOf(-1, 5, 202),
+            intersec("input/intersec.txt", "A & B")
+        )
+        assertThrows(IOException::class.java) { intersec("input/intersec3.txt", "A & J") }
+        assertThrows(IllegalArgumentException::class.java) { intersec("input/intersec2.txt", "A & J") }
+    }
+
+    @Test
+    @Tag("1")
+    fun html() {
+        html("input/html1.txt", "tmp.txt")
+        assertFileContent(
+            "tmp.txt",
+            """<html><body>
+<h1>Header1</h1>
+<h3>Header3</h3>
+<h2>Header2</h2>
+</html></body>""".trimMargin()
+        )
+        File("tmp.txt").delete()
     }
 
     @Test

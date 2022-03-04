@@ -246,6 +246,44 @@ fun racing(inputName: String): String {
     return teams[score.indexOf(score.maxOrNull())] + ", " + score.maxOrNull().toString()
 }
 
+fun intersec(inputName: String, expr: String): MutableList<Int> {
+    val reader = File(inputName)
+    if (!File(inputName).exists()) throw IOException()
+    val names = mutableListOf<String>()
+    val list1 = mutableListOf<MutableList<Int>>()
+    val answer = mutableListOf<Int>()
+
+    for (line in reader.readLines()) {
+        names.add(line.split(" = ")[0])
+        val tmp = mutableListOf<Int>()
+        for (number in line.split(" = ")[1].split(", "))
+            if (number.all { Character.isDigit(it) } or number.any() { it == '-' }) tmp.add(number.toInt())
+            else throw IllegalArgumentException()
+        list1.add(tmp)
+    }
+
+    for (n in list1[names.indexOf(expr.split(" & ")[0])])
+        if (list1[names.indexOf(expr.split(" & ")[1])].contains(n) && !answer.contains(n))
+            answer.add(n)
+
+    return answer
+}
+
+fun html(inputName: String, outputName: String) {
+    val writer = File(outputName).bufferedWriter()
+    val answer = StringBuilder()
+    answer.append("<html><body>\n")
+    for (line in File(inputName).readLines()) {
+        if (line.substring(0, 5).contains(" === "))
+            answer.append("<h3>" + line.substring(6) + "</h3>\n")
+        else if (line.substring(0, 4).contains(" == "))
+            answer.append("<h2>" + line.substring(5) + "</h2>\n")
+        else answer.append("<h1>" + line.substring(4) + "</h1>\n")
+    }
+    answer.append("</html></body>")
+    writer.write(answer.toString())
+    writer.close()
+}
 
 /**
  * Сложная (6 баллов)
