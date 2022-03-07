@@ -127,7 +127,12 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    return if (jumps.matches(Regex("""\d+ [+\-%]+( \d+ [+\-%]+)*"""))) {
+        Regex("""(\d+) [%-]*\+""").findAll(jumps).maxOfOrNull { it.groupValues[1].toInt() } ?: -1
+    } else -1
+}
+
 
 /**
  * Сложная (6 баллов)
@@ -138,7 +143,14 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (!expression.matches(Regex("""\d+( [+\-] \d+)*"""))) throw IllegalArgumentException()
+    val first = Regex("""^(\d+)""").findAll(expression).sumOf { it.groupValues[1].toInt() }
+    val plus = Regex(""" \+ (\d+)""").findAll(expression).sumOf { it.groupValues[1].toInt() }
+    val minus = Regex(""" - (\d+)""").findAll(expression).sumOf { it.groupValues[1].toInt() }
+    return first + plus - minus
+}
+
 
 /**
  * Сложная (6 баллов)

@@ -1,4 +1,4 @@
-@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
+6@file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson5.task1
 
@@ -132,7 +132,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * Простая (2 балла)
  *
  * Для двух списков людей найти людей, встречающихся в обоих списках.
- * В выходном списке не должно быть повторяюихся элементов,
+ * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
 fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
@@ -208,7 +208,13 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val check = mutableMapOf<String, Int>()
+    for (char in list) {
+        check[char] = (check[char] ?: 0) + 1
+    }
+    return check.filterValues { it > 1 }
+}
 
 /**
  * Средняя (3 балла)
@@ -277,7 +283,17 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val check = mutableMapOf<Int, Int>()
+    for (i in list.indices) {
+        val a = check[number - list[i]]
+        check[list[i]] = i
+        if (a != null)
+            return (Pair(a, i))
+    }
+    return Pair(-1, -1)
+}
+
 
 /**
  * Очень сложная (8 баллов)

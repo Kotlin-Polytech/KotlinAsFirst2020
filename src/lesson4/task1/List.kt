@@ -98,7 +98,7 @@ fun squares(vararg array: Int) = squares(array.toList()).toTypedArray()
  * "А роза упала на лапу Азора" является палиндромом.
  */
 fun isPalindrome(str: String): Boolean {
-    val lowerCase = str.toLowerCase().filter { it != ' ' }
+    val lowerCase = str.lowercase().filter { it != ' ' }
     for (i in 0..lowerCase.length / 2) {
         if (lowerCase[i] != lowerCase[lowerCase.length - i - 1]) return false
     }
@@ -120,14 +120,23 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    var sum = 0.0
+    for (i in 0 until v.size) {
+        sum += v[i] * v[i]
+    }
+    return sqrt(sum)
+}
 
 /**
  * Простая (2 балла)
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    return if (list.size != 0) list.sum() / list.size
+    else 0.0
+}
 
 /**
  * Средняя (3 балла)
@@ -208,7 +217,19 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val alf = "abcdefghijklmnopqrstuvwxyz"
+    var number = n
+    var res = ""
+    while (number != 0) {
+        res =
+            (if (number % base < 10)
+                (number % base).toString()
+            else alf[number % base - 10].toString()) + res
+        number /= base
+    }
+    return if (res != "") res else "0"
+}
 
 /**
  * Средняя (3 балла)
@@ -241,7 +262,13 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val firstList = listOf("", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX")
+    val secondList = listOf("", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC")
+    val thirdList = listOf("", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM")
+    val fourthList = listOf("", "M", "MM", "MMM")
+    return (fourthList[n / 1000] + thirdList[n / 100 % 10] + secondList[n / 10 % 10] + firstList[n % 10])
+}
 
 /**
  * Очень сложная (7 баллов)

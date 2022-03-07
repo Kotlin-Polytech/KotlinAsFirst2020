@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -72,7 +75,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    return if (n / 10 == 0) 1
+    else digitNumber(n / 10) + 1
+}
 
 /**
  * Простая (2 балла)
@@ -80,7 +86,18 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var first = 1
+    var second = 1
+    var number = 2
+    while (number < n) {
+        val a = second
+        second += first
+        first = a
+        number++
+    }
+    return second
+}
 
 /**
  * Простая (2 балла)
@@ -120,7 +137,17 @@ fun collatzSteps(x: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int = m * n / nod(m, n)
+
+fun nod(m: Int, n: Int): Int {
+    var a = m
+    var b = n
+    while ((a != 0) && (b != 0)) {
+        if (b <= a) a %= b
+        else b %= a
+    }
+    return max(a, b)
+}
 
 /**
  * Средняя (3 балла)
@@ -129,16 +156,7 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
-
-/**
- * Средняя (3 балла)
- *
- * Для заданных чисел m и n, m <= n, определить, имеется ли хотя бы один точный квадрат между m и n,
- * то есть, существует ли такое целое k, что m <= k*k <= n.
- * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
- */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean = nod(m, n) == 1
 
 /**
  * Средняя (3 балла)
@@ -201,7 +219,15 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var a = 1
+    var counter = 1
+    while (counter < n) {
+        a++
+        counter += digitNumber(a * a)
+    }
+    return ((a.toDouble().pow(2)) / 10.0.pow(counter - n)).toInt() % 10
+}
 
 /**
  * Сложная (5 баллов)
@@ -212,4 +238,12 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var a = 1
+    var counter = 1
+    while (counter < n) {
+        a++
+        counter += digitNumber(fib(a))
+    }
+    return (fib(a) / 10.0.pow(counter - n)).toInt() % 10
+}
