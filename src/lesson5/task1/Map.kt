@@ -2,6 +2,8 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.NullableMonad.map
+
 // Урок 5: ассоциативные массивы и множества
 // Максимальное количество баллов = 14
 // Рекомендуемое количество баллов = 9
@@ -208,7 +210,12 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
+fun extractRepeats(list: List<String>): Map<String, Int> {
+    val gr = list.groupBy { it }
+    val answer = mutableMapOf<String, Int>()
+    for (x in gr) if (x.value.size > 1) answer.put(x.key, x.value.size)
+    return answer
+}
 
 /**
  * Средняя (3 балла)
@@ -277,7 +284,18 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var a = -1
+    var b = -1
+    for (i in 0..list.size - 2)
+        for (j in i + 1..list.size - 1)
+            if (list[i] + list[j] == number) {
+                a = i
+                b = j
+                return Pair(a, b)
+            }
+    return Pair(a, b)
+}
 
 /**
  * Очень сложная (8 баллов)

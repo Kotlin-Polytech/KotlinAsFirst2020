@@ -1,0 +1,6 @@
+origin  https://github.com/uphoros/KotlinAsFirst2020.git (fetch)
+origin  https://github.com/uphoros/KotlinAsFirst2020.git (push)
+upstream-my     https://git@github.com/uphoros/KotlinAsFirst2021.git (fetch)
+upstream-my     https://git@github.com/uphoros/KotlinAsFirst2021.git (push)
+upstream-theirs https://git@github.com/elisananeva/KotlinAsFirst2021.git (fetch)
+upstream-theirs https://git@github.com/elisananeva/KotlinAsFirst2021.git (push)

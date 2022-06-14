@@ -2,6 +2,9 @@
 
 package lesson6.task1
 
+import java.io.File
+import java.io.IOException
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -138,7 +141,149 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    if (expression == "") throw IllegalArgumentException("")
+    var answer = 0
+    var sign = '+'
+    var num = true
+    for (a in expression.split("\\s+".toRegex())) {
+        if (a.isEmpty()) throw IllegalArgumentException("")
+        if (num) {
+            if (a.matches("^\\d+\$".toRegex())) answer += (sign + a).toInt()
+            else throw IllegalArgumentException("")
+            num = false
+        } else if (!num) {
+            if (a.matches("^[+-]".toRegex())) sign = a[0]
+            else throw IllegalArgumentException("")
+            num = true
+        }
+    }
+    return answer
+}
+
+fun todo(todos: List<String>): List<String> {
+    val a = todos.groupBy { it.split(" - ")[0] }
+    for (i in todos) if (i.split(" - ").size != 2) throw IllegalArgumentException()
+    val answer = mutableListOf<String>()
+    val days = listOf("понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье")
+    for (i in a.keys) if (!days.contains(i)) throw IllegalArgumentException()
+    for (day in days)
+        if (a.containsKey(day)) answer.add(day + " - " + a.getOrDefault(day, emptyList()).size.toString())
+    return answer
+}
+
+fun todoList(inputName: String, limit: Int): String {
+    val tasks = mutableListOf<String>()
+    val importance = mutableListOf<Int>()
+    val time = mutableListOf<Int>()
+    val reader = File(inputName)
+    for (line in reader.readLines()) {
+        tasks.add(line.split(" -- ")[0])
+        importance.add(line.split(" -- ")[1].split(",")[0].split(" ")[1].toInt())
+        time.add(line.split(" -- ")[1].split(", ")[1].split(" ")[0].toInt())
+    }
+    var max = 0;
+    var i1 = 0
+    var i2 = 0
+    for (i in 0..(importance.size - 1)) {
+
+        for (j in i..importance.size - 1) {
+            if ((importance[i] + importance[j]) > max)
+                if ((time[i] + time[j]) <= limit)
+                    if (i != j) {
+                        i1 = i
+                        i2 = j
+                        max = importance[i] + importance[j]
+                    }
+        }
+    }
+    if (max == 0) throw IllegalArgumentException()
+
+    return tasks[i1] + " и " + tasks[i2] + ", сумма важности " + max.toString() + ", сумма времени " +
+            (time[i1] + time[i2]).toString() + " мин."
+}
+
+fun football(inputName: String): String {
+    val reader = File(inputName)
+    val teams = mutableListOf<String>()
+    val results = mutableListOf<String>()
+    val score = mutableListOf<Int>()
+
+    for (line in reader.readLines()) {
+        results.add(line.split(" - ")[0].replace(" ", ""))
+        teams.add(line.split(" - ")[1])
+        score.add(0)
+    }
+
+    for (i in 0..results.size - 1)
+        for (j in 0..results[i].length - 1) {
+
+            if (results[i][j] == 'W')
+                if (results[j][i] == 'L') score[i] += 3
+                else throw IllegalStateException()
+
+            if (results[i][j] == 'D')
+                if (results[j][i] == 'D') score[i] += 1
+                else throw IllegalStateException()
+        }
+    return teams[score.indexOf(score.maxOrNull())]
+}
+
+fun racing(inputName: String): String {
+    val teams = mutableListOf<String>()
+    val score = mutableListOf<Int>()
+    if (!File(inputName).exists()) throw IOException()
+    val file = File(inputName).readLines()
+    for (line in file) {
+        if (line.split(" ").size > 2) {
+            if (!teams.contains(line.split(", ")[1])) {
+                teams.add(line.split(", ")[1])
+                score.add(line.split(", ")[2].toInt())
+
+            } else score[teams.indexOf(line.split(", ")[1])] += line.split(", ")[2].toInt()
+        }
+    }
+    return teams[score.indexOf(score.maxOrNull())] + ", " + score.maxOrNull().toString()
+}
+
+fun intersec(inputName: String, expr: String): MutableList<Int> {
+    val reader = File(inputName)
+    if (!File(inputName).exists()) throw IOException()
+    val names = mutableListOf<String>()
+    val list1 = mutableListOf<MutableList<Int>>()
+    val answer = mutableListOf<Int>()
+
+    for (line in reader.readLines()) {
+        names.add(line.split(" = ")[0])
+        val tmp = mutableListOf<Int>()
+        for (number in line.split(" = ")[1].split(", "))
+            if (number.all { Character.isDigit(it) } or number.any() { it == '-' }) tmp.add(number.toInt())
+            else throw IllegalArgumentException()
+        list1.add(tmp)
+    }
+
+    for (n in list1[names.indexOf(expr.split(" & ")[0])])
+        if (list1[names.indexOf(expr.split(" & ")[1])].contains(n) && !answer.contains(n))
+            answer.add(n)
+
+    return answer
+}
+
+fun html(inputName: String, outputName: String) {
+    val writer = File(outputName).bufferedWriter()
+    val answer = StringBuilder()
+    answer.append("<html><body>\n")
+    for (line in File(inputName).readLines()) {
+        if (line.substring(0, 5).contains(" === "))
+            answer.append("<h3>" + line.substring(6) + "</h3>\n")
+        else if (line.substring(0, 4).contains(" == "))
+            answer.append("<h2>" + line.substring(5) + "</h2>\n")
+        else answer.append("<h1>" + line.substring(4) + "</h1>\n")
+    }
+    answer.append("</html></body>")
+    writer.write(answer.toString())
+    writer.close()
+}
 
 /**
  * Сложная (6 баллов)
@@ -149,7 +294,21 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val a = mutableListOf<String>()
+    for (i in str.split("\\s+".toRegex())) a.add(i.lowercase())
+    var currentStr = a[0]
+    for (i in 1..a.size - 1) {
+        if (a[i] == currentStr) {
+            var answer = 0
+            for (j in 0..i - 2) answer += a[j].length + 1
+            return answer
+        }
+        currentStr = a[i]
+    }
+
+    return -1
+}
 
 /**
  * Сложная (6 баллов)

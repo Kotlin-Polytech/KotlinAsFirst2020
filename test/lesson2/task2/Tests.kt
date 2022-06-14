@@ -61,6 +61,7 @@ class Tests {
     @Tag("3")
     fun brickPasses() {
         assertTrue(brickPasses(2, 10, 5, 6, 3))
+        assertFalse(brickPasses(2, 1, 2, 1, 1))
         assertTrue(brickPasses(4, 4, 4, 4, 4))
         assertFalse(brickPasses(6, 5, 4, 3, 6))
         assertTrue(brickPasses(3, 2, 1, 1, 2))

@@ -207,7 +207,7 @@ class Tests {
 
     @Test
     @Tag("3")
-    fun lineByPoint() {
+    fun lineByPoints() {
         assertApproxEquals(Line(Point(0.0, 0.0), PI / 2), lineByPoints(Point(0.0, 0.0), Point(0.0, 2.0)))
         assertApproxEquals(Line(Point(1.0, 1.0), PI / 4), lineByPoints(Point(1.0, 1.0), Point(3.0, 3.0)))
     }
@@ -253,6 +253,17 @@ class Tests {
         assertEquals(4.0, result.radius, 0.02)
         for (p in listOf(p1, p2, p3, p4, p5, p6)) {
             assertTrue(result.contains(p))
+        }
+        // Набор точек для примера
+        // A = (-3,-1), B = (0, 3), C = (1.96, -1.6), D = (0, -2.4), тут диаметр это BD = 5.4, но ни окружность по B и D, ни окружность по B, D и A, ни окружность по B, D и C все точки не содержат, причём, с запасом в районе 0.2 - 0.3
+        val a = Point(-3.0, -1.0)
+        val b = Point(0.0, 3.0)
+        val c = Point(1.96, -1.6)
+        val d = Point(0.0, -2.4)
+        val result2 = minContainingCircle(a, b, c, d)
+        assertEquals(2.89, result2.radius, 0.01)
+        for (p in listOf(a, b, c, d)) {
+            assertTrue(result2.contains(p))
         }
     }
 }
